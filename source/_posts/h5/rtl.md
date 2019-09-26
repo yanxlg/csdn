@@ -115,7 +115,7 @@ tags:
          });
         ```
     - 最终生成的样式做了优化，针对每一个父样式类，仅会生成一个对应的ltr和rtl样式，其内所有属性均生成在一个类中,如下所示
-       {% asset_img img-left image2019-9-25_11-21-27.png 这是一个新的博客的图片的说明 %}
+       {% asset_img img-left image2019-9-25_11-21-27.png rtl generator style %}
     - 使用方式，在webpack的postcss plugin中添加
     - 最终业务样式完全按照原有设计图开发即可，如有定制按照rtlcss提供的directives去配置
     - hacks:
