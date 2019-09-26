@@ -45,67 +45,82 @@ tags:
     - 熟悉postcss原理及AST语法树
     - 插件代码如下：
         ```javascript
-          const postcss = require('postcss');
-          const postcssPluginRtl = require('rtlcss');
-           
-          module.exports = postcss.plugin('postcss-plugin-rtl', opts => {
-              const {exclude, include} = opts || {};
-              return root => {
-                  const file = root.source.input.file;
-                  if (exclude && exclude.test(file) || include && !include.test(file)) {
-                      return ;
-                  }
-           
-                  let extraRulesList = [];
-                  root.walkRules(rule => {
-                      const css = rule.toString();
-                      const parseCss = postcssPluginRtl.process(css, {
-                          useCalc: true,
-                      });
-                      const prevNode = postcss.parse(css);
-                      const nextNode = postcss.parse(parseCss);
-                      const selector = rule.selector;
-                      const rtlRule = postcss.rule({ selector: "[dir='rtl'] " + selector});
-                      const ltrRule = postcss.rule({ selector: "[dir='ltr'] " + selector});
-                      let removeList = [];
-                      // 可能不止一个nodes
-                      for (let i = 0 ; i < prevNode.nodes.length; i++) {
-                          let cur = prevNode.nodes[i].nodes[0]; // 初始值
-                          let _cur = nextNode.nodes[i].nodes[0];
-                          // 游标遍历
-                          while (cur) {
-                              if (cur.type === "decl") {
-                                  while ( _cur.type !== "decl") {
-                                      _cur = _cur.next();
-                                  }
-                                  // compare
-                                  if (cur.prop !== _cur.prop || cur.value !== _cur.value) {
-                                      ltrRule.append({
-                                          prop: cur.prop,
-                                          value: cur.value,
-                                      });
-                                      rtlRule.append({
-                                          prop: _cur.prop,
-                                          value: _cur.value,
-                                      });
-                                      removeList.push(cur);
-                                  }
-                                  _cur = _cur.next();
-                              }
-                              cur = cur.next();
-                          }
-                      }
-                      removeList.map((decl) => decl.remove());
-                      extraRulesList.push(rtlRule);
-                      extraRulesList.push(ltrRule);
-                      // 转成Node后进行比较
-                      rule.replaceWith(prevNode);
-                  });
-                  root.append(extraRulesList);
-              };
-          });
+         const postcss = require('postcss');
+         const postcssPluginRtl = require('rtlcss');
+      
+         module.exports = postcss.plugin('postcss-plugin-rtl', opts => {
+             const {exclude, include} = opts || {};
+             return root => {
+                 const file = root.source.input.file;
+                 if (exclude && exclude.test(file) || include && !include.test(file)) {
+                     return ;
+                 }
+                 let extraRulesList = [];
+                 root.walkRules(rule => {
+                     if(rule.parent.type==="atrule"){
+                         return;
+                     }
+                     const css = rule.toString().replace(/;?}$/,";}");
+                     const parseCss = postcssPluginRtl.process(css, {
+                         useCalc: true,
+                     });
+                     const prevNode = postcss.parse(css);
+         
+                     const nextNode = postcss.parse(parseCss);
+                     const selector = rule.selector;
+         
+                     const rtlRule = postcss.rule({ selector: "[dir='rtl'] " + selector});
+                     const ltrRule = postcss.rule({ selector: "[dir='ltr'] " + selector});
+                     let rtlRuleHasChildren = false;
+                     let removeList = [];
+                     // 可能不止一个nodes
+                     for (let i = 0 ; i < prevNode.nodes.length; i++) {
+                         let cur = prevNode.nodes[i].nodes[0]; // 初始值
+                         let _cur = nextNode.nodes[i].nodes[0];
+                         // 游标遍历
+                         while (cur) {
+                             if (cur.type === "decl") {
+                                 while ( _cur.type !== "decl") {
+                                     _cur = _cur.next();
+                                 }
+                                 // compare
+                                 // fix trim
+                                 if (cur.prop !== _cur.prop || cur.value.trim() !== _cur.value.trim()) {
+                                     ltrRule.append({
+                                         prop: cur.prop,
+                                         value: cur.value,
+                                     });
+                                     rtlRule.append({
+                                         prop: _cur.prop,
+                                         value: _cur.value,
+                                     });
+                                     removeList.push(cur);
+                                     rtlRuleHasChildren=true;
+                                 }
+                                 _cur = _cur.next();
+                             }
+                             cur = cur.next();
+                         }
+                     }
+                     removeList.map((decl) => decl.remove());
+                     if (rtlRuleHasChildren) {
+                         extraRulesList.push(rtlRule);
+                         extraRulesList.push(ltrRule);
+                     }
+                     // 转成Node后进行比较
+                     rule.replaceWith(prevNode);
+                 });
+                 root.append(extraRulesList);
+             };
+         });
         ```
     - 最终生成的样式做了优化，针对每一个父样式类，仅会生成一个对应的ltr和rtl样式，其内所有属性均生成在一个类中,如下所示
        {% asset_img img-left image2019-9-25_11-21-27.png 这是一个新的博客的图片的说明 %}
     - 使用方式，在webpack的postcss plugin中添加
-    - 最终业务样式完全按照原有设计图开发即可，如有定制按照rtlcss提供的注释法去配置
+    - 最终业务样式完全按照原有设计图开发即可，如有定制按照rtlcss提供的directives去配置
+    - hacks:
+        * AtRule：如@keyframes，@keyframes动画不支持父子选择器模式，该插件对于AtRule不作处理，因此@keyframes如果想要实现ltr与rtl不同则需要定义两个不同的动画，然后通过rtlcss directives语法指定rtl专有属性值
+        * sass：压缩模式下行注释必须使用/*!xxx*/格式，非压缩模式下可以使用/**/。压缩模式会将最后一个属性的结束符“;”自动删除，会影响directives 解析，因此插件内部做了自动补全
+        * less：directives完全按照官网方式配置
+    - next：
+        * 可能存在部分未适配的case，后续遇到后做相应处理
