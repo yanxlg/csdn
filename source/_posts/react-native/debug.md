@@ -51,4 +51,10 @@ categories: ReactNative
 
         * 回到开发者菜单然后选择Reload JS。
 
-备注：理想状态下已经可以看到APP页面了，但是，如果上面步骤都已经做好，并且电脑本地服务终端已显示加载成功，但是APP的页面还未加载出来，显示白屏状态！是我们的步骤有问题？这里并不是我们的步骤有问题，此时只需要退出正在运行的APP，重新打开即可，就可以成功加载到APP页面啦！
+ 备注：理想状态下已经可以看到APP页面了，但是，如果上面步骤都已经做好，并且电脑本地服务终端已显示加载成功，但是APP的页面还未加载出来，显示白屏状态！是我们的步骤有问题？这里并不是我们的步骤有问题，此时只需要退出正在运行的APP，重新打开即可，就可以成功加载到APP页面啦！
+
+4. 调试
+   摇晃手机打开app的开发菜单，可以看到有两个选项，一个是Enable live reload另一个是Enable hot reloading。Enable live reload表示刷新时全局刷新,而hot reloading是局部刷新。这两个我们都选择允许后，我们改完代码并保存，可以实时看到修改效果，不用重新编译运行或者 reload。
+ {% asset_img img-left 5146067-7aabe3ae51b7f0a6.png %}
+  在 app 设置 菜单中选择 Debug JS Remotely，同时PC端打开localhost:8081/debugger-ui 页面即可查看控制台，并且可以在debuggerWorker.js中设置断点进行调试
+
