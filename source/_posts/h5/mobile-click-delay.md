@@ -1,5 +1,5 @@
 ---
-title: 移动端点击事件延迟原理及解决方案
+title: mobile click 300-350ms
 date: 2019-09-29 16:54:09
 tags:
 ---
