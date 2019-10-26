@@ -44,7 +44,7 @@ tags:
 * postcss 插件开发
     - 熟悉postcss原理及AST语法树
     - 插件代码如下：
-        ```javascript
+        ```yml
          const postcss = require('postcss');
          const postcssPluginRtl = require('rtlcss');
       
@@ -125,9 +125,5 @@ tags:
     - next：
         * 可能存在部分未适配的case，后续遇到后做相应处理
 
-## 发布[![npm](https://img.shields.io/npm/v/@yanxlg/postcss-rtl.svg?style=flat-square)](https://www.npmjs.com/package/@yanxlg/postcss-rtl)[![npm](https://img.shields.io/npm/l/@yanxlg/postcss-rtl.svg?style=flat-square)](https://www.npmjs.com/package/@yanxlg/postcss-rtl)
-[![npm](https://img.shields.io/npm/dt/@yanxlg/postcss-rtl.svg?style=flat-square)](https://www.npmjs.com/package/@yanxlg/postcss-rtl)
-[![npm](https://img.shields.io/npm/dm/@yanxlg/postcss-rtl.svg?style=flat-square)](https://www.npmjs.com/package/@yanxlg/postcss-rtl)
-[![Known Vulnerabilities](https://snyk.io/test/github/mbrevda/@yanxlg/postcss-rtl/badge.svg)](https://snyk.io/test/github/mbrevda/@yanxlg/postcss-rtl)
-[![wercker status](https://app.wercker.com/status/51bfd9b8aa6e52acf77310e17f00aff4/s/master "wercker status")](https://app.wercker.com/project/byKey/51bfd9b8aa6e52acf77310e17f00aff4)
-
+## 发布 & 版本
+<span class="inline-image hide-alt">[![npm](https://img.shields.io/npm/v/@yanxlg/postcss-rtl.svg?style=flat-square)](https://www.npmjs.com/package/@yanxlg/postcss-rtl)[![npm](https://img.shields.io/npm/l/@yanxlg/postcss-rtl.svg?style=flat-square)](https://www.npmjs.com/package/@yanxlg/postcss-rtl)[![npm](https://img.shields.io/npm/dt/@yanxlg/postcss-rtl.svg?style=flat-square)](https://www.npmjs.com/package/@yanxlg/postcss-rtl)[![npm](https://img.shields.io/npm/dm/@yanxlg/postcss-rtl.svg?style=flat-square)](https://www.npmjs.com/package/@yanxlg/postcss-rtl)[![Known Vulnerabilities](https://snyk.io/test/github/mbrevda/@yanxlg/postcss-rtl/badge.svg)](https://snyk.io/test/github/mbrevda/@yanxlg/postcss-rtl)[![wercker status](https://app.wercker.com/status/51bfd9b8aa6e52acf77310e17f00aff4/s/master "wercker status")](https://app.wercker.com/project/byKey/51bfd9b8aa6e52acf77310e17f00aff4)</span>
