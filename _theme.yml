@@ -1,0 +1,4 @@
+## @override theme config
+avatar_effect: true
+canvas_nest:
+  enable: true
