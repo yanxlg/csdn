@@ -2,3 +2,15 @@
 avatar_effect: true
 canvas_nest:
   enable: true
+highlight_retract: false
+highlight_copy: true
+
+copy:
+  enable: true
+  copyright: true
+
+post_beautify:
+  enable: true
+
+toc:
+  enable: false

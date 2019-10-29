@@ -1,10 +1,12 @@
 ---
 title: h5 RTL
 date: 2019-09-25 16:25:15
-tags:
+tags: 
+    - h5
+    - rtl
 ---
 本文分享关于前端中实现正反排排版的技术方案，介绍相关应用场景及成熟方案
-## 需求
+## 前言
    前端国际化产品中不仅涉及到多语言的解决方案，还会涉及到正反排版的问题，多语言通常对应的框架都有i18n的技术方案，而正反布局很少有比较好的解决方案，因此正反排版问题是前端工程师一直以来比较头疼的问题。
 ## 前期调研
    web 开发中rtl涉及到文字及布局，而在html中有html元素的dir属性及css中direction属性去控制文本的左右排版问题，direction属性只隐性存在css中，无法控制布局显示，因此使用html标签元素的dir属性来控制左排还是右排。同时通过该属性控制不同的样式显示
@@ -44,7 +46,7 @@ tags:
 * postcss 插件开发
     - 熟悉postcss原理及AST语法树
     - 插件代码如下：
-        ```yml
+        ```javascript
          const postcss = require('postcss');
          const postcssPluginRtl = require('rtlcss');
       
