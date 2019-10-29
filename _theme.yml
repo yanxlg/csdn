@@ -14,3 +14,6 @@ post_beautify:
 
 toc:
   enable: false
+
+hr:
+  enable: true
