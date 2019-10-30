@@ -27,7 +27,9 @@
     "leancloud-storage": "^3.15.0",
     "hexo-generator-feed": "^2.0.0",
     "hexo-generator-tipue-search-json": "^1.2.1",
-    "hexo-renderer-jade": "^0.5.0"
+    "hexo-renderer-jade": "^0.5.0",
+    "hexo-filter-flowchart": "^1.0.4",
+    "hexo-filter-sequence": "^1.0.3"
   },
   "unusedDependencies": {
     "hexo-renderer-marked-lazy": "^1.0.2"
