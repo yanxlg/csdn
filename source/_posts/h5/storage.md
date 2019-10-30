@@ -16,6 +16,7 @@ top: true
         服务端通常使用cookie+session来进行验证、授权等权限控制操作。
         cookie可以临时存储小量数据供客户端使用，例如加密秘钥等
         客户端可以将部分数据同时cookie来实现长期存储，或者传递给服务端
+    + cookie 大小：不超过4KB
     + cookie 限制
     cookie 在传统web中起到非常重要的作用，因为传统web仅能通过cookie在本地存储一些数据，常用与进行账号验证，token下发，授权等。cookie存在很多限制问题，具体如下：
     > 一、浏览器允许每个域名所包含的cookie数：
@@ -54,7 +55,7 @@ top: true
         删除：通过`document.cookie`设置expire过期时间实现删除
 2. sessionStorage
     sessionStorage与session是两个完全不同的概念，session是一个会话连接，通常配合cookie实现会话保持机制，作用在服务端；sessionStorage是客户端一个数据存储机制，以文件形式存在于浏览器中
-    - 大小：通常浏览器中大小在`5M`左右，不同的浏览器略微不同
+    - 大小：通常浏览器中大小在`5M`左右，不同的浏览器略微不同，在2.5MB 到 10MB 之间
     - 操作：
         + 存储：sessionStorage.setItem(key:string,value:string|object);// 高版本`chrome`浏览器支持直接存储json对象，其他浏览器会自动将对象进行toString处理
         + 读取：sessionStorage.getItem(key:string); //`chrome`中如果设置的是对象，则读取出来的就是对象，其他浏览器必定是字符串 
@@ -62,6 +63,7 @@ top: true
         + 清空：sessionStorage.clear();
         + 检查：sessionStorage.key(key:string);//判断是否有key
         + 键值对数量：sessionStorage.length
+    - 阻塞：storage操作是同步操作，会阻塞上下文
     - 作用域：
         sessionStorage受同源策略影响，不可以跨域访问，sessionStorage受窗口影响，仅在当前窗口可以访问，即`同源同窗口`，窗口关闭后自动清除，刷新不会清除
     - 生命周期：
