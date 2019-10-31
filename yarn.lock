@@ -433,7 +433,7 @@ bluebird@^3.2.2, bluebird@^3.4.0, bluebird@^3.5.1, bluebird@^3.5.2:
   resolved "https://registry.npm.taobao.org/bluebird/download/bluebird-3.5.5.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fbluebird%2Fdownload%2Fbluebird-3.5.5.tgz#a8d0afd73251effbbd5fe384a77d73003c17a71f"
   integrity sha1-qNCv1zJR7/u9X+OEp31zADwXpx8=
 
-bluebird@^3.5.5:
+bluebird@^3.5.0, bluebird@^3.5.5:
   version "3.7.1"
   resolved "https://registry.npm.taobao.org/bluebird/download/bluebird-3.7.1.tgz#df70e302b471d7473489acf26a93d63b53f874de"
   integrity sha1-33DjArRx10c0iazyapPWO1P4dN4=
@@ -2222,6 +2222,18 @@ hexo-deployer-ftpsync@^0.1.1:
   dependencies:
     ftpsync "^0.1.5"
 
+hexo-deployer-git@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npm.taobao.org/hexo-deployer-git/download/hexo-deployer-git-2.0.0.tgz#54d20a038676eb828c989c17a775d26c3e26fc01"
+  integrity sha1-VNIKA4Z264KMmJwXp3XSbD4m/AE=
+  dependencies:
+    bluebird "^3.5.0"
+    chalk "^2.4.1"
+    hexo-fs "^2.0.0"
+    hexo-util "^1.0.0"
+    moment "^2.18.0"
+    swig-templates "^2.0.2"
+
 hexo-filter-flowchart@^1.0.4:
   version "1.0.4"
   resolved "https://registry.npm.taobao.org/hexo-filter-flowchart/download/hexo-filter-flowchart-1.0.4.tgz#5b213126a02771df260ed0d5c6e04613486f9ccf"
@@ -2432,7 +2444,7 @@ hexo-util@^0.1.6:
     ent "^2.2.0"
     highlight.js "^8.6.0"
 
-hexo-util@^1.4.0, hexo-util@latest:
+hexo-util@^1.0.0, hexo-util@^1.4.0, hexo-util@latest:
   version "1.4.0"
   resolved "https://registry.npm.taobao.org/hexo-util/download/hexo-util-1.4.0.tgz#73dff21e544fbe37399a9f2103704528db411e8a"
   integrity sha1-c9/yHlRPvjc5mp8hA3BFKNtBHoo=
@@ -3459,7 +3471,7 @@ moment-timezone@^0.5.21:
   dependencies:
     moment ">= 2.9.0"
 
-"moment@>= 2.9.0", moment@^2.10.6, moment@^2.22.2, moment@^2.7.0:
+"moment@>= 2.9.0", moment@^2.10.6, moment@^2.18.0, moment@^2.22.2, moment@^2.7.0:
   version "2.24.0"
   resolved "https://registry.npm.taobao.org/moment/download/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
   integrity sha1-DQVdU/UFKqZTyfbraLtdEr9cK1s=
@@ -4894,7 +4906,7 @@ swig-extras@0.0.1:
   dependencies:
     markdown "~0.5.0"
 
-swig-templates@^2.0.3:
+swig-templates@^2.0.2, swig-templates@^2.0.3:
   version "2.0.3"
   resolved "https://registry.npm.taobao.org/swig-templates/download/swig-templates-2.0.3.tgz#6b4c43b462175df2a8da857a2043379ec6ea6fd0"
   integrity sha1-a0xDtGIXXfKo2oV6IEM3nsbqb9A=

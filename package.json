@@ -29,7 +29,8 @@
     "hexo-generator-tipue-search-json": "^1.2.1",
     "hexo-renderer-jade": "^0.5.0",
     "hexo-filter-flowchart": "^1.0.4",
-    "hexo-filter-sequence": "^1.0.3"
+    "hexo-filter-sequence": "^1.0.3",
+    "hexo-deployer-git": "^2.0.0"
   },
   "unusedDependencies": {
     "hexo-renderer-marked-lazy": "^1.0.2"
