@@ -17,3 +17,6 @@ toc:
 
 hr:
   enable: true
+
+wordcount:
+  enable: true
