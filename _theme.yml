@@ -20,3 +20,6 @@ hr:
 
 wordcount:
   enable: true
+
+announcement:
+  content: 感谢访问本站，若喜欢请收藏 ^_^

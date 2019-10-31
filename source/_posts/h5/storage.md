@@ -5,6 +5,9 @@ tags:
     - h5
     - storage
     - 跨窗口通信
+categories:
+  - h5
+  - storage
 top: true
 ---
 ## 前言

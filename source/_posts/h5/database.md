@@ -6,6 +6,9 @@ tags:
     - database
     - webSql
     - indexDB
+categories:
+    - h5
+    - database
 top: true
 ---
 ##前言

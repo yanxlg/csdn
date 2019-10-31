@@ -4,7 +4,10 @@ date: 2019-09-29 16:54:09
 tags:
     - h5
     - fastclick
-    - touch delay
+    - click delay
+categories:
+  - h5
+  - mobile
 top: true
 ---
   做过m站开发的小伙伴都清楚，在移动端，通过webview打开的网页中，js点击事件感觉比在PC浏览器中触发慢，这是因为移动端默认情况下点击事件会存在300-350ms延迟，很多人不清楚300ms的来源，只知道有这么一回事，本文主要介绍其来源及常用解决方案。

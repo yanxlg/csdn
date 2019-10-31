@@ -5,5 +5,7 @@ tags:
     - h5
     - pwa
     - manifest
+categories:
+  - h5
 ---
 
