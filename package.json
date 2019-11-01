@@ -8,6 +8,7 @@
   "scripts": {
     "update": "git submodule update --remote"
   },
+  "bugs": "https://github.com/yanxlg/csdn.git",
   "dependencies": {
     "hexo": "^4.0.0",
     "hexo-generator-archive": "^1.0.0",
