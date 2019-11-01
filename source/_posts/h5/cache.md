@@ -10,3 +10,6 @@ tags:
     - application Cache
     - cache store
 ---
+
+
+localStorage实现库缓存
