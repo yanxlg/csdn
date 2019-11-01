@@ -11,5 +11,6 @@ tags:
     - cache store
 ---
 
+application cache
 
 localStorage实现库缓存
