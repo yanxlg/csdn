@@ -79,5 +79,5 @@ top: true
         `永久存储`，如果不手动清除，数据会永久存储，不会自动回收
     - 事件：`storage`
         localStorage相比于sessionStorage多一个事件监听，这个事件在localStorage发生改变时会触发，这也是实现`跨窗口通信`的基础。此事件在`同Context(不能说同窗口)`中不会触发，在同一个上下文环境中执行监听和更新操作，是无法监听到事件触发的，只有在不同的上下文（包括不同窗口或者iframe）中分别进行更新个监听，才能正常触发该事件
-4. [IndexDB](../database)
-5. [WebSql](../database)
+4. {% post_link h5/database IndexDB %}
+5. {% post_link h5/database WebSql %}

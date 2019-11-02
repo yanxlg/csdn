@@ -98,7 +98,7 @@ self.addEventListener('install', function(event) {
 })
 ```
 在安装中需要处理一些初始化，例如preCache，IndexDB 初始化等，preCache会直接下载并缓存指定文件，占用网络资源，因此不建议register直接在首屏加载时调用。
-- `cacheStorage api`：阅读[cacheStorage](../cacheStorage)
+- `cacheStorage api`：阅读{% post_link h5/cacheStorage cacheStorage %}
 - `waitUntil`：函数内所有的promise,只要有一个promise的结果是reject，那么这次安装就会失败。比如说cache.addAll 时，有一个资源下载不回来，即视为整个安装失败，那么后面的操作都不会执行，只能等待sw下一次重新注册。另外waitUntil还有一个重要的特性，那就是延长事件生命周期的时间，由于浏览器会随时睡眠 sw，所以为了防止执行中断就需要使用 event.waitUntil 进行捕获，当所有加载都成功时，那么 sw 就可以下一步。
 - `skipWaiting`:安装成功后并不是立即被使用，如果当前页面已经存在sw进程，那么需要等待下一次页面被打开时新的sw才会被激活，或者使用`self.skipWaiting()`跳过等待，直接进入`activate`状态。
 4. 激活
@@ -272,4 +272,4 @@ window.addEventListener('load', function() {
 ## 第三方工具
 - ~~sw-precache~~：google 早期的轮子，与2006年停止维护，有对应的webpack插件
 - ~~sw-toolbox~~：google 早期的轮子，与2006年停止维护，有对应的webpack插件
-- [workbox](../workbox)：google最新推荐的工具，百度的[lavas](https://lavas.baidu.com/)底层使用的就是这个。
+- {% post_link h5/workbox workbox %}：google最新推荐的工具，百度的[lavas](https://lavas.baidu.com/)底层使用的就是这个。
