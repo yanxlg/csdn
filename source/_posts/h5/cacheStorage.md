@@ -1,16 +1,17 @@
 ---
 title: cacheStorage
-date: 2019-11-02 16:56:04
 tags:
-    - h5
-    - cache
-    - storage
-    - cacheStorage
+  - h5
+  - cache
+  - storage
+  - cacheStorage
 categories:
   - h5
   - cache
   - storage
 top: true
+abbrlink: f688fea9
+date: 2019-11-02 16:56:04
 ---
 ## 前言
 h5中本地存储除了LocalStorage、SessionStorage外还有一个鲜为人知的CacheStorage，顾名思义，其就是用来做缓存的storage，虽然通常很多东西都用localStorage和sessionStorage去进行存储，但用作缓存的话还是cacheStorage最佳。

@@ -1,19 +1,20 @@
 ---
 title: service worker
-date: 2019-11-01 11:43:55
 tags:
-    - h5
-    - optimize
-    - PWA
-    - cache
-    - Service Worker
-    - To supplement
+  - h5
+  - optimize
+  - PWA
+  - cache
+  - Service Worker
+  - To supplement
 categories:
-    - h5
-    - optimize
-    - PWA
-    - cache
+  - h5
+  - optimize
+  - PWA
+  - cache
 top: true
+abbrlink: bb551a96
+date: 2019-11-01 11:43:55
 ---
 ## 前言
 随着前端可处理业务的复杂，页面中资源也越来越庞大，优化逐渐成为一个重要的关注点，而缓存在所有优化中占据重要的地位，本文主要介绍web缓存机制中的Service Worker。

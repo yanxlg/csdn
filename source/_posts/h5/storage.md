@@ -1,14 +1,15 @@
 ---
 title: storage
-date: 2019-10-29 14:59:56
 tags:
-    - h5
-    - storage
-    - 跨窗口通信
+  - h5
+  - storage
+  - 跨窗口通信
 categories:
   - h5
   - storage
 top: true
+abbrlink: 547a1b34
+date: 2019-10-29 14:59:56
 ---
 ## 前言
   随着前端业务的复杂化，前端对于数据敏感度越来越高，对于本地化存储数据的需求越来越多，本文主要介绍目前前端中可用于数据存储的方式

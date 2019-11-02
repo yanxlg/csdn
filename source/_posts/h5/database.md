@@ -1,15 +1,16 @@
 ---
 title: database
-date: 2019-10-29 14:59:40
 tags:
-    - h5
-    - database
-    - webSql
-    - indexDB
+  - h5
+  - database
+  - webSql
+  - indexDB
 categories:
-    - h5
-    - database
+  - h5
+  - database
 top: true
+abbrlink: c953062e
+date: 2019-10-29 14:59:40
 ---
 ##前言
 web端对于数据的存储需求逐渐增多，越来越多的网站开始考虑，将大量数据储存在客户端,减少从服务器获取数据，直接从本地获取数据。cookie、localStorage、sessionStorage只能存储少量数据，对于大量数据或者一些框架代码的存储来说显得无力，同时不提供搜索功能，不能建立自定义的索引，因此客户端数据库的概念被h5引入。
