@@ -23,3 +23,8 @@ wordcount:
 
 announcement:
   content: 感谢访问本站，若喜欢请收藏 ^_^
+
+runtimeshow:
+  start_date: 10/31/2019 00:00:00
+
+highlight_theme: darker
