@@ -127,10 +127,10 @@ date: 2019-09-25 16:25:15
     - 最终业务样式完全按照原有设计图开发即可，如有定制按照rtlcss提供的directives去配置
     - hacks:
         * AtRule：如@keyframes，@keyframes动画不支持父子选择器模式，该插件对于AtRule不作处理，因此@keyframes如果想要实现ltr与rtl不同则需要定义两个不同的动画，然后通过rtlcss directives语法指定rtl专有属性值
-        * sass：压缩模式下行注释必须使用/*!xxx*/格式，非压缩模式下可以使用/**/。压缩模式会将最后一个属性的结束符“;”自动删除，会影响directives 解析，因此插件内部做了自动补全
+        * sass：压缩模式下行`注释`必须使用`/*!xxx*/`格式，非压缩模式下可以使用/**/。压缩模式会将最后一个属性的结束符“;”自动删除，会影响directives 解析，因此插件内部做了自动补全
+        {% asset_img ex_1.png sass注释用法 %}
         * less：directives完全按照官网方式配置
     - next：
         * 可能存在部分未适配的case，后续遇到后做相应处理
-
 ## 发布 & 版本
 <span class="inline-image hide-alt">[![npm](https://img.shields.io/npm/v/@yanxlg/postcss-rtl.svg?style=flat-square)](https://www.npmjs.com/package/@yanxlg/postcss-rtl)[![npm](https://img.shields.io/npm/l/@yanxlg/postcss-rtl.svg?style=flat-square)](https://www.npmjs.com/package/@yanxlg/postcss-rtl)[![npm](https://img.shields.io/npm/dt/@yanxlg/postcss-rtl.svg?style=flat-square)](https://www.npmjs.com/package/@yanxlg/postcss-rtl)[![npm](https://img.shields.io/npm/dm/@yanxlg/postcss-rtl.svg?style=flat-square)](https://www.npmjs.com/package/@yanxlg/postcss-rtl)[![Known Vulnerabilities](https://snyk.io/test/github/mbrevda/@yanxlg/postcss-rtl/badge.svg)](https://snyk.io/test/github/mbrevda/@yanxlg/postcss-rtl)[![wercker status](https://app.wercker.com/status/51bfd9b8aa6e52acf77310e17f00aff4/s/master "wercker status")](https://app.wercker.com/project/byKey/51bfd9b8aa6e52acf77310e17f00aff4)</span>
