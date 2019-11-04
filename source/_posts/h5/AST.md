@@ -2,9 +2,12 @@
 title: AST
 abbrlink: 7389a59f
 date: 2019-11-02 16:57:32
-tags:
+categories:
     - h5
+tags:
     - AST
+    - Babel
+top: true
 ---
 ## 前言
 提起 AST 抽象语法树，大家可能并不感冒，认为它和你的领域没有多少交集。但是提到它的使用场景，也许会让你大吃一惊。原来它一直在你左右与你相伴，而你却不知。
