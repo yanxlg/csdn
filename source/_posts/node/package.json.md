@@ -1,13 +1,14 @@
 ---
 title: package.json
-date: 2019-10-31 16:56:53
 categories:
-    - node
+  - node
 tags:
-    - h5
-    - node
-    - package.json
+  - h5
+  - node
+  - package.json
 top: true
+abbrlink: 14f889f2
+date: 2019-10-31 16:56:53
 ---
 ## 概述
  本文主要介绍package.json一系列配置文件中你所需要掌握的细节。注意package.json必须是一个完全的JSON，而不是Javascript对象字面量；该文件描述受npm-config中的配置影响，下面主要介绍每个字段的含义和用法。

@@ -1,15 +1,16 @@
 ---
 title: application cache
-date: 2019-11-01 11:43:33
 tags:
-    - h5
-    - cache
-    - optimize
-    - deprecated
+  - h5
+  - cache
+  - optimize
+  - deprecated
 categories:
-    - h5
-    - optimize
-    - cache
+  - h5
+  - optimize
+  - cache
+abbrlink: 58a73389
+date: 2019-11-01 11:43:33
 ---
 ## 前言
  随着H5的发展，前端业务也来越复杂，页面中资源逐渐庞大，优化逐渐成为一个重要的关注点，而缓存在所有优化中占据重要的地位，本文主要介绍web缓存机制中的Application Cache。

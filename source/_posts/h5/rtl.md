@@ -1,13 +1,14 @@
 ---
 title: h5 RTL
-date: 2019-09-25 16:25:15
-tags: 
-    - h5
-    - rtl
+tags:
+  - h5
+  - rtl
 categories:
   - h5
   - ill8
 top: true
+abbrlink: 5213db69
+date: 2019-09-25 16:25:15
 ---
 本文分享关于前端中实现正反排排版的技术方案，介绍相关应用场景及成熟方案
 ## 前言

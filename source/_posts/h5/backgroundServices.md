@@ -1,14 +1,15 @@
 ---
 title: Background Services
-date: 2019-10-30 14:19:57
 categories:
-    - h5
-    - background
-    - service
+  - h5
+  - background
+  - service
 tags:
-    - h5
-    - Background Services
-    - Service Workers
+  - h5
+  - Background Services
+  - Service Workers
+abbrlink: 58a5f4e8
+date: 2019-10-30 14:19:57
 ---
 ##前言
   随着h5中service worker的出现，开发者已经可以实现一些数据缓存及简单的后台服务功能，但是早期的service worker在后台获取接口及延迟发送数据方面仍然不足，因此扩展了两个Background Services来实现这两个功能。

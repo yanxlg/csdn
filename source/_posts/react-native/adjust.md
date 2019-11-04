@@ -1,10 +1,11 @@
 ---
 title: adjust
-date: 2019-09-30 08:56:04
 tags:
   - RN
   - adjust
 top: true
+abbrlink: 4b038e1d
+date: 2019-09-30 08:56:04
 ---
 ## 前言
 移动端开发中，设计到不同设备分辨率的UI大小适配问题，该问题不仅存在于H5中，RN中同样会出现该问题

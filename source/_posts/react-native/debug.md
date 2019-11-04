@@ -1,7 +1,8 @@
 ---
 title: RN 真机调试
-date: 2019-09-26 23:47:51
 categories: ReactNative
+abbrlink: b90162ba
+date: 2019-09-26 23:47:51
 ---
  React-Native项目在Android真机上调试？接下来直奔主题，通过USB将手机和电脑连接，打开手机上的USB调试。不通型号的手机可能设置方式不一样，这里具体不在细说……
 

@@ -1,16 +1,17 @@
 ---
 title: submodule
-date: 2019-10-29 15:11:11
 categories:
-    - project
+  - project
 tags:
-   - node
-   - npm
-   - h5
-   - git 
-   - submodule
-   - project framework
+  - node
+  - npm
+  - h5
+  - git
+  - submodule
+  - project framework
 top: true
+abbrlink: 6a58ae0d
+date: 2019-10-29 15:11:11
 ---
 ## 前言
  随着前端的发展，前端项目越来越庞大、臃肿，模块化的思想越来越普及，不同的项目公用的模块需要进行统一管理，由此提出来组件库的思想。
