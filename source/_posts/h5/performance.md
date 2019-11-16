@@ -11,12 +11,13 @@ H5 项目中经常涉及到性能优化，此时需要知道页面的性能指�
 
 ## 代码
 ```typescript
-setTimeout(function() {
+window.addEventListener("load",function () {
     const performance = window.performance;
     if (performance) {
-        var e = performance.getEntriesByType('navigation')[0], r = 0
-        e || (r = (e = performance.timing).navigationStart)
-        var n = [{
+        let e = performance.getEntriesByType('navigation')[0];
+        let r = 0;
+        e || (r = (e = performance.timing).navigationStart);
+        const n = [{
             key: 'Redirect',
             desc: '\u7f51\u9875\u91cd\u5b9a\u5411\u7684\u8017\u65f6',
             value: e.redirectEnd - e.redirectStart
@@ -48,12 +49,12 @@ setTimeout(function() {
             key: 'DOMContentLoaded',
             desc: 'dom\u52a0\u8f7d\u5b8c\u6210\u7684\u65f6\u95f4',
             value: e.domContentLoadedEventEnd - r
-        }, { 
+        }, {
             key: 'Loaded',
-            desc: '\u9875\u9762load\u7684\u603b\u8017\u65f6', 
-            value: e.loadEventEnd - r 
+            desc: '\u9875\u9762load\u7684\u603b\u8017\u65f6',
+            value: e.loadEventEnd - r
         }];
         console && console.table && console.table(n)
     }
-}, 0)
+});
 ```
