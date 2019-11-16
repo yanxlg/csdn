@@ -15,3 +15,7 @@ definePlugins 中参数：
 
 
 通过 __IS_BROWSER 可以配置ssr 对应的webpack配置，及代码中环境判断，仅在编译环境有效，
+
+
+
+umi 和 egg-bin 命令出现部分ts或es6文件转换失败，是因为`umi-core/lib/registerBabel`中配置了babel转换属性`only`，但是在`umi`中并没有传递extra属性过去
