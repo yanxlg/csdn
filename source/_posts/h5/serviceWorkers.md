@@ -262,6 +262,7 @@ window.addEventListener('load', function() {
 
 ## 兼容性
 目前service worker的兼容各大浏览器是从16年左右开始，也就是之前版本的浏览器都不兼容，因此兼容性相对于application cache来说比较差，移动端`Android5+`，`IOS11.3+`才兼容，具体兼容性可以[查看](https://caniuse.com/#search=service%20worker)。
+仅在`https`和`localhost`下生效，`http`站点中不支持。
 
 ## 注意点
 - sw.js 从项目开始到最终项目下线，不可以修改其文件名，如果修改文件名会出现无法更新的问题，因为通常页面是被缓存的，页面中注册的sw.js任然是以前的sw服务，甚至如果原有的sw文件不存在的情况下，注册会失败，任然使用原有服务。
