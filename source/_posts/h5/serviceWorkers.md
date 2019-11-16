@@ -274,3 +274,11 @@ window.addEventListener('load', function() {
 - ~~sw-precache~~：google 早期的轮子，与2006年停止维护，有对应的webpack插件
 - ~~sw-toolbox~~：google 早期的轮子，与2006年停止维护，有对应的webpack插件
 - {% post_link h5/workbox workbox %}：google最新推荐的工具，百度的[lavas](https://lavas.baidu.com/)底层使用的就是这个。
+
+
+## serviceWorker在线检测
+{% note success%}
+`support`: <span id="support" style="color:green"></span><script>document.getElementById("support").innerText=navigator.serviceWorker!==void 0;</script>
+`iframe support`:<span id="support1" style="color:green"></span><iframe style="display:none" id="support_iframe"></iframe><script>document.getElementById("support1").innerText=document.getElementById("support_iframe").contentWindow.navigator.serviceWorker!==void 0;</script>
+{% endnote %}
+
