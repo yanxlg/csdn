@@ -1,8 +1,9 @@
 ---
 title: webpack
-date: 2019-11-18 09:09:05
 tags:
-    - webpack@4+
+  - webpack@4+
+abbrlink: b9f20a20
+date: 2019-11-18 09:09:05
 ---
 ## 前言
 前端开发中工程化越来越重要，而工程化工具中`webpack`的地位尤其重要，本文主要介绍`webpack@4+`的相关配置。

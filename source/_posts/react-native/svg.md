@@ -1,8 +1,9 @@
 ---
 title: svg
-date: 2019-11-26 11:30:31
 tags:
-    - react-native
+  - react-native
+abbrlink: '3452590'
+date: 2019-11-26 11:30:31
 ---
 ## 前言
 `react-native`中图片适配一直来说是个比较麻烦的问题，需要使用不同分辨率的图片，相对来说比较麻烦，对比与web端矢量图的应用，react-native中对于适量图svg的需求也越来越广泛。
