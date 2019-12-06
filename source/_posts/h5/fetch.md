@@ -1,11 +1,12 @@
 ---
 title: Fetch
-date: 2019-12-06 15:01:13
 categories:
-    - h5
+  - h5
 tags:
-    - h5
-    - ajax
+  - h5
+  - ajax
+abbrlink: 43284c47
+date: 2019-12-06 15:01:13
 ---
 ## 前言
 前端开发中经常涉及到接口请求，而在h5中常用的接口请求框架有`fetch`、`axios`、`umi-request`，`fetch`功能比较简单，能够满足正常的api调用需要，`axios`和`umi-request`功能比较丰富，支持取消及拦截器操作。本文主要介绍`fetch`的功能扩展。
