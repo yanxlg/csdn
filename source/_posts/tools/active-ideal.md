@@ -21,3 +21,8 @@ JetBrains 系列软件在开发圈中越来越普及，相对来说在实用性�
 
 ## 其他
 详细使用步骤可以参考下载包中pdf文档
+
+>>>
+>本文作者： Neo Peng
+ 本文链接： https://zhile.io/2018/08/25/jetbrains-license-server-crack.html
+ 版权声明： 本博客所有文章除特别声明外，均采用 CC BY-NC-ND 4.0 许可协议。转载请注明出处！
