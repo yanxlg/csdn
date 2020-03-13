@@ -24,7 +24,7 @@ git clone ssh://git@git.gitvv.com:38022/frontend/vv-rn.git
 
 2. 前端项目初始化
 ```shell
-npm config set registry https://g.gitvv.com/  # 设置镜像源
+npm config set registry http://npm.gitvv.com/  # 设置镜像源
 npm login                                     # 登录
 npm install                                   # 安装依赖
 ```
