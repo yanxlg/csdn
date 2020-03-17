@@ -1,9 +1,10 @@
 ---
 title: git
-date: 2020-03-17 09:48:45
 tags:
-    - tools
-    - git
+  - tools
+  - git
+abbrlink: 518e617c
+date: 2020-03-17 09:48:45
 ---
 ## 引导
 在开发过程中，我们最常用的团队协同工具就是git，因此git常用操作必须要熟练掌握
