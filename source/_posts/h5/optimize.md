@@ -4,6 +4,9 @@ categories:
   - h5
 abbrlink: 752103c2
 date: 2019-09-26 22:04:02
+password: mikemessi
+message: 本文暂不开放，需要密码才可阅读.
+wrong_pass_message: 密码错误，请输入正确的密码.
 ---
  本文整理并归纳前端优化方案，包括移动端、PC站、前端框架、部署、架构、开发等方面优化。
 

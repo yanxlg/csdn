@@ -2,7 +2,10 @@
 title: RN Long List
 categories: ReactNative
 abbrlink: 9b9cdea5
-date: 2019-09-26 23:28:24
+date: 2019-05-26 23:28:24
+password: mikemessi
+message: 本文暂不开放，需要密码才可阅读.
+wrong_pass_message: 密码错误，请输入正确的密码.
 ---
  React Native 开发中经常遇到长列表场景，不仅包括无限加载瀑布流，还包括聊天列表等等，大量的列表元素堆积在页面中时对于Application的内存消耗非常严重，严重影响App的性能，因此一直以来对于长列表的优化在RN中经常涉及，本文主要介绍官方的一些长列表组件使用方式及优秀的第三方组件的使用
 

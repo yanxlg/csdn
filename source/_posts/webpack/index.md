@@ -4,6 +4,9 @@ tags:
   - webpack@4+
 abbrlink: b9f20a20
 date: 2019-11-18 09:09:05
+password: mikemessi
+message: 本文暂不开放，需要密码才可阅读.
+wrong_pass_message: 密码错误，请输入正确的密码.
 ---
 ## 前言
 前端开发中工程化越来越重要，而工程化工具中`webpack`的地位尤其重要，本文主要介绍`webpack@4+`的相关配置。

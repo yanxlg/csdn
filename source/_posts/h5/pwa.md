@@ -6,7 +6,7 @@ tags:
 categories:
   - h5
 abbrlink: f17b0fbd
-date: 2019-10-29 14:58:59
+date: 2019-01-29 14:58:59
 ---
 ## 前言
 什么是`PWA`？`PWA`全称`Progressive Web App`，即渐进式WEB应用。是Google 在2016年提出的概念，2017年落地的web技术。目的就是在移动端利用提供的标准化框架，在网页应用中实现和原生应用相近的用户体验的渐进式网页应用。

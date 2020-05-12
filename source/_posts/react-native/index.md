@@ -3,6 +3,9 @@ title: ReactNative环境搭建
 categories: ReactNative
 abbrlink: 5bef46cc
 date: 2019-09-17 09:23:16
+password: mikemessi
+message: 本文暂不开放，需要密码才可阅读.
+wrong_pass_message: 密码错误，请输入正确的密码.
 ---
 
 

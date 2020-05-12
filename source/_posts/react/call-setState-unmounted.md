@@ -1,9 +1,12 @@
 ---
 title: Call setState when unMounted
-tags: '-react'
-categories: '-react'
+tags: react
+categories: react
 abbrlink: 9bcaf31a
-date: 2019-11-20 13:20:41
+date: 2019-03-20 13:20:41
+password: mikemessi
+message: 本文暂不开放，需要密码才可阅读.
+wrong_pass_message: 密码错误，请输入正确的密码.
 ---
 ## 前言
 React开发过程中经常涉及到异步修改状态的问题，然而开发过程中会发现，某些操作会导致控制台提示`当前组件已经卸载，不应该继续调用setState修改其状态`，本文关于该问题点进行讨论。

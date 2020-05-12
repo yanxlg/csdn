@@ -4,6 +4,9 @@ tags:
   - react-native
 abbrlink: '3452590'
 date: 2019-11-26 11:30:31
+password: mikemessi
+message: 本文暂不开放，需要密码才可阅读.
+wrong_pass_message: 密码错误，请输入正确的密码.
 ---
 ## 前言
 `react-native`中图片适配一直来说是个比较麻烦的问题，需要使用不同分辨率的图片，相对来说比较麻烦，对比与web端矢量图的应用，react-native中对于适量图svg的需求也越来越广泛。

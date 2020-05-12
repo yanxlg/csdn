@@ -1,13 +1,16 @@
 ---
 title: AST
 abbrlink: 7389a59f
-date: 2019-11-02 16:57:32
+date: 2019-05-02 16:57:32
 categories:
     - h5
 tags:
     - AST
     - Babel
 top: true
+password: mikemessi
+message: 本文暂不开放，需要密码才可阅读.
+wrong_pass_message: 密码错误，请输入正确的密码.
 ---
 ## 前言
 提起 AST 抽象语法树，大家可能并不感冒，认为它和你的领域没有多少交集。但是提到它的使用场景，也许会让你大吃一惊。原来它一直在你左右与你相伴，而你却不知。

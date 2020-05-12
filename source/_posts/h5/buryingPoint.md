@@ -3,6 +3,9 @@ title: 前端埋点实现
 abbrlink: 8e6ad7f6
 date: 2019-11-04 13:41:54
 tags:
+password: mikemessi
+message: 本文暂不开放，需要密码才可阅读.
+wrong_pass_message: 密码错误，请输入正确的密码.
 ---
 
 

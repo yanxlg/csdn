@@ -3,6 +3,10 @@ title: umi.js
 abbrlink: a96cfee5
 date: 2019-11-06 11:51:44
 tags:
+
+password: mikemessi
+message: 本文暂不开放，需要密码才可阅读.
+wrong_pass_message: 密码错误，请输入正确的密码.
 ---
 
 definePlugins 中参数：

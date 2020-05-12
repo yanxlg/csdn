@@ -5,6 +5,9 @@ tags:
   - git
 abbrlink: 518e617c
 date: 2020-03-17 09:48:45
+password: mikemessi
+message: 本文暂不开放，需要密码才可阅读.
+wrong_pass_message: 密码错误，请输入正确的密码.
 ---
 ## 引导
 在开发过程中，我们最常用的团队协同工具就是git，因此git常用操作必须要熟练掌握

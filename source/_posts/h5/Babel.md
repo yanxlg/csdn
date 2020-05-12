@@ -3,6 +3,9 @@ title: Babel
 abbrlink: 7056c18d
 date: 2019-11-04 10:38:39
 tags:
+password: mikemessi
+message: 本文暂不开放，需要密码才可阅读.
+wrong_pass_message: 密码错误，请输入正确的密码.
 ---
 
 

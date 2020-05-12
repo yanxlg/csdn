@@ -4,6 +4,9 @@ abbrlink: 140ab620
 date: 2020-02-27 10:05:22
 tags: 随笔
 categories: 随笔
+password: mikemessi
+message: 本文暂不开放，需要密码才可阅读.
+wrong_pass_message: 密码错误，请输入正确的密码.
 ---
 
 ## 前言

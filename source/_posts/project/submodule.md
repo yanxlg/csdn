@@ -11,7 +11,10 @@ tags:
   - project framework
 top: true
 abbrlink: 6a58ae0d
-date: 2019-10-29 15:11:11
+date: 2018-10-29 15:11:11
+password: mikemessi
+message: 本文暂不开放，需要密码才可阅读.
+wrong_pass_message: 密码错误，请输入正确的密码.
 ---
 ## 前言
  随着前端的发展，前端项目越来越庞大、臃肿，模块化的思想越来越普及，不同的项目公用的模块需要进行统一管理，由此提出来组件库的思想。

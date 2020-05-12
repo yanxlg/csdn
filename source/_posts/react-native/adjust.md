@@ -5,7 +5,10 @@ tags:
   - adjust
 top: true
 abbrlink: 4b038e1d
-date: 2019-09-30 08:56:04
+date: 2018-09-30 08:56:04
+password: mikemessi
+message: 本文暂不开放，需要密码才可阅读.
+wrong_pass_message: 密码错误，请输入正确的密码.
 ---
 ## 前言
 移动端开发中，设计到不同设备分辨率的UI大小适配问题，该问题不仅存在于H5中，RN中同样会出现该问题
