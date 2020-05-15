@@ -180,11 +180,11 @@ React随着16版函数式组件的推广，hooks普及率也越来越高，其�
         }
         ```
 - useDebugValue：用于将label显示在React 调试工具`DevTools`中，调试用，编译会自动忽略
-- useResponder：[实验性Hook]功能目前不明
-- useDeferredValue：[实验性Hook]跟`useTransition`类似，也是延迟更新作用，相当于在新数据准备好之前，可以继续沿用旧数据，如果配置时间内新数据来了，（从旧内容切换到）显示新内容，否则立即更新状态，该 loading 就 loading，即预加载。
-- useTransition：[实验性Hook]延迟操作，通常用于延迟更新，例如loading效果，如果速度极快时loading会一闪而过，这种场景可以使用useTransition来延迟更新loading状态，如果极快时不会显示loading
-- useMutableSource：[实验性Hook]不依赖Context，构建全局状态管理，目前全局状态仅可通过Context来管理，新版的redux本质上也是context
-- useOpaqueIdentifier：[实验性Hook]功能目前不明
+- useResponder：`[实验性Hook]`功能目前不明
+- useDeferredValue：`[实验性Hook]`跟`useTransition`类似，也是延迟更新作用，相当于在新数据准备好之前，可以继续沿用旧数据，如果配置时间内新数据来了，（从旧内容切换到）显示新内容，否则立即更新状态，该 loading 就 loading，即预加载。
+- useTransition：`[实验性Hook]`延迟操作，通常用于延迟更新，例如loading效果，如果速度极快时loading会一闪而过，这种场景可以使用useTransition来延迟更新loading状态，如果极快时不会显示loading
+- useMutableSource：`[实验性Hook]`不依赖Context，构建全局状态管理，目前全局状态仅可通过Context来管理，新版的redux本质上也是context
+- useOpaqueIdentifier：`[实验性Hook]`功能目前不明
 
 ## 原理
 Hooks用法比较简单，原理也需要做相应了解，一般面试可能会涉及到相关只是
