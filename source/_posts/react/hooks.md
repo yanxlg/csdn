@@ -4,9 +4,6 @@ title: React Hooks
 tags: react
 categories: react
 date: 2019-9-20 13:20:41
-password: mikemessi
-message: 本文暂不开放，需要密码才可阅读.
-wrong_pass_message: 密码错误，请输入正确的密码.
 ---
 ## 前言
 React随着16版函数式组件的推广，hooks普及率也越来越高，其实钩子函数在React中一直存在，只是以前不对外使用，React在底层每个声明周期都有前置钩子和后置钩子，因此hooks在React中尤为重要。
@@ -183,6 +180,28 @@ React随着16版函数式组件的推广，hooks普及率也越来越高，其�
         }
         ```
 - useDebugValue：用于将label显示在React 调试工具`DevTools`中，调试用，编译会自动忽略
+- useResponder：[实验性Hook]功能目前不明
+- useDeferredValue：[实验性Hook]跟`useTransition`类似，也是延迟更新作用，相当于在新数据准备好之前，可以继续沿用旧数据，如果配置时间内新数据来了，（从旧内容切换到）显示新内容，否则立即更新状态，该 loading 就 loading，即预加载。
+- useTransition：[实验性Hook]延迟操作，通常用于延迟更新，例如loading效果，如果速度极快时loading会一闪而过，这种场景可以使用useTransition来延迟更新loading状态，如果极快时不会显示loading
+- useMutableSource：[实验性Hook]不依赖Context，构建全局状态管理，目前全局状态仅可通过Context来管理，新版的redux本质上也是context
+- useOpaqueIdentifier：[实验性Hook]功能目前不明
+
+## 原理
+Hooks用法比较简单，原理也需要做相应了解，一般面试可能会涉及到相关只是
+- Hooks与组件的关系：React在渲染时会生成一个虚拟节点树（JSON，现在为Fibber链表），一个组件中所有的Hooks信息（称之为`memoizedState链表`）会存储对应组件Fibber节点上，跟组件生命周期关联，一同创建，一同销毁。
+- Hooks存储方式：单向链表，Rect中目前链表结构使用比较频繁，某些方面类似于数组，有些人在手写React源码时会用数组方式实现，其实并不正确，单向链表没有索引，仅存在游标，通过游标及next可以遍历整个链表，与数组相似的地方在于都是可遍历结构，不同的地方是数组可以根据索引获取任意位置的值，单向链表从HEAD开始仅能向下
+- Hooks 阶段：`mount`和`update`，分别对应组件创建和更新不同生命周期，在`mount`阶段创建链表节点并添加到Fiber节点属性上，在`update`阶段主要判断deps，更新链表值，返回原有值或新值。
+- Hooks不能嵌套在`if语句`、`for语句`、`子函数`等不定语句中的原因：`memoizedState链表` 是按hook定义的顺序来生成数据链的，且仅在`mount`阶段生成一次，后续`update`阶段并不会重新初始化`memoizedState链表`，仅会从链表中通过游标cursor按个返回现有状态，所以如果Hooks顺序变化或者数量变化，`memoizedState`并不会感知到，也不能去更新。
+- `"Capture Value"` 特性是如何产生的：`"Capture Value"`特性就是通常说的状态记忆特性，对于deps未发生变化的Hooks，在update阶段会返回原有的callback或者useMemo结果并不会返回新传入的callback，因此useCallback调用时还是调用的原方法，原方法的作用域下所有变量都是原状态（除`useRef`引用外，因此通常也用useRef来存储变量，提升性能），因此形成了状态记忆。主要原因是函数作用域，并不是闭包。
+- 自定义的 Hook 是如何影响使用它的函数组件的：自定义Hooks其实本质上就是一个函数，在执行时内部Hooks跟组件共用一个`memoizedState链表`
+- 链表节点上属性介绍
+    - memoizedState：最新值
+    - baseQueue：稳定值，如果最新值render时抛出异常，即会使用该稳定值进行数据回溯，防止页面崩溃
+    - naxt：链表指针，只想下一个链表节点
+- setState第二个解构值是更新队列的一个dispatch方法，更新队列本文不做介绍
+- 简单图解
+{% asset_img img-left mount.png mount阶段 %}
+{% asset_img img-left update.png update阶段 %}
 
 ## 优化注意
 1. State合并：很多时候一个组件中需要使用多个useState来分别存储不同的状态管理，但是需要注意React的setState触发render机制{% post_link react/react React底层原理分析 %}，在同步函数中如果多次调用setState则只会触发一次render，如果在异步中多次调用则触发n次render ,因此针对代码中出现的异步中多次setState的现象需要进行合并，合并总体方法就是较少useState的使用，或者render使用useMemo节流；

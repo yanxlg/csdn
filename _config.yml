@@ -5,6 +5,9 @@
 # Site
 title: yanxlg@blog
 subtitle:
+  sub:
+    - 每日一帖&#44;掌握技术前线
+    - One post every day to master the front technology
 description:
 keywords:
 author: yanxlg
@@ -98,3 +101,12 @@ baidu_url_submit:
   host: www.hui-wang.info ## 在百度站长平台中注册的域名
   token: your_token ## 请注意这是您的秘钥， 所以请不要把博客源代码发布在公众仓库里!
   path: baidu_urls.txt ## 文本文档的地址， 新链接会保存在此文本文档里
+
+Flink:
+  headline: 友情链接
+  info_headline: 我的Blog资料
+  name: Blog 名字： yanxlg
+  address: Blog 地址： https://blog.yanxlg.cn
+  avatar: Blog 头像： https://blog.yanxlg.cn/img/avatar.png
+  info: Blog 简洁： 每日一帖，掌握技术前线
+  comment: 如果需要交换友链,请留言
