@@ -10,7 +10,7 @@ copy:
   copyright: true
 
 toc:
-  enable: false
+  enable: true
 
 hr:
   enable: true
@@ -40,7 +40,37 @@ menu:
   Link: /link/ || fa fa-link
   About: /about/ || fa fa-heart
   List||fa fa-list:
-    - React || /categories/react/ || fa fa-music
-    - Movie || /movies/ || fa fa-film
+    - React || /categories/react/ || blog-icon icon-react
+    - Vue || /categories/vue/ || blog-icon icon-vue
+    - Nodejs || /categories/nodejs/ || blog-icon icon-node
 
 default_top_img: /images/bg.jpeg
+
+cover:
+  default_cover:
+    - /images/bg.jpeg
+
+social:
+  fa fa-github: https://github.com/yanxlg || Github
+  fa fa-envelope: mailto:798410225@qq.com || Email
+  fa fa-rss: /atom.xml || RSS
+
+reward:
+  enable: false
+
+anchor: true
+
+auto_open_sidebar:
+  enable: false
+
+avatar:
+  img: /images/avatar.svg
+  effect: false
+
+aside:
+  card_announcement:
+    content: 更新大前端知识网络，欢迎共同学习
+
+inject:
+  head:
+  - <link rel="stylesheet" href="/custom.css">

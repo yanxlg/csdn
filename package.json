@@ -6,7 +6,7 @@
     "version": "4.2.0"
   },
   "scripts": {
-    "update": "git submodule update --remote"
+    "update": "git submodule update --remote --force"
   },
   "bugs": "https://github.com/yanxlg/csdn.git",
   "dependencies": {

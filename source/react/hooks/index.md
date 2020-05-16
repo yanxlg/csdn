@@ -1,10 +1,8 @@
 ---
-abbrlink: c72f21a0
 title: React Hooks
-tags: hooks
+date: 2019-9-20 13:20:41
 categories: react
 top: true
-date: 2019-9-20 13:20:41
 ---
 ## 前言
 React随着16版函数式组件的推广，hooks的概念也越来越普及，其实钩子函数在React中一直存在，只是以前不对外使用，React在底层每个生命周期都有前置钩子和后置钩子，因此hooks在React中尤为重要。
