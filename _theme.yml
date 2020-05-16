@@ -9,9 +9,6 @@ copy:
   enable: true
   copyright: true
 
-post_beautify:
-  enable: true
-
 toc:
   enable: false
 
@@ -28,3 +25,22 @@ runtimeshow:
   start_date: 10/31/2019 00:00:00
 
 highlight_theme: darker
+
+beautify:
+  enable: true
+
+click_heart:
+  enable: true
+
+menu:
+  Home: / || fa fa-home
+  Archives: /archives/ || fa fa-archive
+  Tags: /tags/ || fa fa-tags
+  Categories: /categories/ || fa fa-folder-open
+  Link: /link/ || fa fa-link
+  About: /about/ || fa fa-heart
+  List||fa fa-list:
+    - React || /categories/react/ || fa fa-music
+    - Movie || /movies/ || fa fa-film
+
+default_top_img: /images/bg.jpeg

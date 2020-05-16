@@ -10,7 +10,7 @@ React随着16版函数式组件的推广，hooks普及率也越来越高，其�
 
 ## Hooks
 - useContext：用于和React中的Context特性配合使用，可以直接在函数式组件中绑定Context的值，并订阅更新
-    ```tsx
+    ```jsx
         const GlobalContext = React.createContext<IGlobalContext>(null);
 
         const GlobalContextProvider: React.FC = props => {
