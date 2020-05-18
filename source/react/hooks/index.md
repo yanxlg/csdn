@@ -199,8 +199,8 @@ Hooks用法比较简单，原理也需要做相应了解，一般面试可能会
     - naxt：链表指针，只想下一个链表节点
 - setState第二个解构值是更新队列的一个dispatch方法，更新队列本文不做介绍
 - 简单图解
-{% asset_img img-left mount.png mount阶段 %}
-{% asset_img img-left update.png update阶段 %}
+![mount阶段](./index/mount.png)
+![update阶段](./index/update.png)
 
 ## 优化注意
 1. State合并：很多时候一个组件中需要使用多个useState来分别存储不同的状态管理，但是需要注意React的setState触发render机制{% post_link react/react React底层原理分析 %}，在同步函数中如果多次调用setState则只会触发一次render，如果在异步中多次调用则触发n次render ,因此针对代码中出现的异步中多次setState的现象需要进行合并，合并总体方法就是较少useState的使用，或者render使用useMemo节流；
