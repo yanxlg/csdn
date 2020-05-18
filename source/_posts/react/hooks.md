@@ -121,7 +121,47 @@ React随着16版函数式组件的推广，hooks的概念也越来越普及，�
     // 取值
     dataRef.current;
     ```
-- useLayoutEffect：与`useEffect`具有相似的功能，具体用法参考[useEffect](#useEffect)；但是又有区别，在类组件中`componentDidMount`和`componentDidUpdate`是同步触发的，在render结束后就执行，会阻塞浏览器painting，因此在类组件这两个生命周期中直接操作DOM不会出现DOM闪烁现象。而`useEffect`是异步触发的，并不会阻塞浏览器painting，为了分离js与渲染线程来提升性能，因此在`useEffect`中进行DOM操作会出现DOM闪烁，通常不会用到该Hook，React中不推荐去直接操作DOM，使用动画库除外。
+- useLayoutEffect：与`useEffect`具有相似的功能，具体用法参考[useEffect](#useEffect)；但是又有区别，在类组件中`componentDidMount`和`componentDidUpdate`是同步触发的，在render结束后就执行，会阻塞浏览器painting，因此在类组件这两个生命周期中直接操作DOM不会出现DOM闪烁现象。而`useEffect`是异步触发的，并不会阻塞浏览器painting，为了分离js与渲染线程来提升性能，因此在`useEffect`中进行DOM操作会出现DOM闪烁，通常不会用到该Hook，React中不推荐去直接操作DOM，使用动画库除外。需要注意以下2点：
+1. `useLayoutEffect`在时间线上，触发优先与`useEffect`，具体的是在虚拟dom diff完成后并将更新属性更新到到真实DOM上后立即执行，此时浏览器还没有渲染绘制，会被js线程阻塞，此时直接修改DOM样式不会出现闪烁现象，而`useEffect`是使用`requestIdleCallback`创建的异步callback，如果在`useEffect`修改样式的话会出现样式突变闪烁现象
+2. `useLayoutEffect`中可以覆盖state控制的样式属性等，如果样式属性受state控制，那么`useLayoutEffect`会在每次样式改变后立即执行，看下面例子
+    ```typescript
+    const Test = () => {
+        const [left, setLeft] = useState(0);
+
+        useLayoutEffect(() => {
+            if (left) {
+                // @ts-ignore
+                console.log(document.getElementById('test').style.left);
+                // @ts-ignore
+                document.getElementById('test').style.left = '1000px';
+                // @ts-ignore
+                console.log(document.getElementById('test').style.left);
+            }
+        }, [left]);
+
+        setTimeout(() => {
+            setLeft(10);
+        }, 5000);
+
+        return (
+            <div
+                id="test"
+                style={{
+                    position: 'absolute',
+                    left: left,
+                    width: 100,
+                    height: 100,
+                    backgroundColor: 'red',
+                }}
+            />
+        );
+    };
+
+    // ==>
+    // 10px
+    // 1000px
+    ```
+    最终结果可以看出，`useLayoutEffect`在state基础上强制修改了dom的样式，并最终覆盖，可以看出是state更新优先，`useLayoutEffect`修改在render之后，同时可以观察到元素没有发生闪烁，位置直接从0变成了1000，并没有先变成10再变成1000，因此可以看出`useLayoutEffect`是同步并阻塞浏览器绘制，通常DOM操作和动画会考虑放在其中实现。
 - <span id="useEffect">useEffect</span>
     1. 触发场景：
         - 在组件render之后异步触发，不会阻塞浏览器painting，
@@ -189,7 +229,7 @@ React随着16版函数式组件的推广，hooks的概念也越来越普及，�
 
 ## 原理
 Hooks用法比较简单，原理也需要做相应了解，一般面试可能会涉及到相关只是
-- Hooks与组件的关系：React在渲染时会生成一个虚拟节点树（JSON，现在为Fibber链表），一个组件中所有的Hooks信息（称之为`memoizedState链表`）会存储对应组件Fibber节点上，跟组件生命周期关联，一同创建，一同销毁。
+- Hooks与组件的关系：React在渲染时会生成一个虚拟节点树（JSON，现在为Fiber链表），一个组件中所有的Hooks信息（称之为`memoizedState链表`）会存储对应组件Fibber节点上，跟组件生命周期关联，一同创建，一同销毁。
 - Hooks存储方式：单向链表，Rect中目前链表结构使用比较频繁，某些方面类似于数组，有些人在手写React源码时会用数组方式实现，其实并不正确，单向链表没有索引，仅存在游标，通过游标及next可以遍历整个链表，与数组相似的地方在于都是可遍历结构，不同的地方是数组可以根据索引获取任意位置的值，单向链表从HEAD开始仅能向下
 - Hooks 阶段：`mount`和`update`，分别对应组件创建和更新不同生命周期，在`mount`阶段创建链表节点并添加到Fiber节点属性上，在`update`阶段主要判断deps，更新链表值，返回原有值或新值。
 - Hooks不能嵌套在`if语句`、`for语句`、`子函数`等不定语句中的原因：`memoizedState链表` 是按hook定义的顺序来生成数据链的，且仅在`mount`阶段生成一次，后续`update`阶段并不会重新初始化`memoizedState链表`，仅会从链表中通过游标cursor按个返回现有状态，所以如果Hooks顺序变化或者数量变化，`memoizedState`并不会感知到，也不能去更新。
