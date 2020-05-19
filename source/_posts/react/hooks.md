@@ -122,8 +122,8 @@ React随着16版函数式组件的推广，hooks的概念也越来越普及，�
     dataRef.current;
     ```
 - useLayoutEffect：与`useEffect`具有相似的功能，具体用法参考[useEffect](#useEffect)；但是又有区别，在类组件中`componentDidMount`和`componentDidUpdate`是同步触发的，在render结束后就执行，会阻塞浏览器painting，因此在类组件这两个生命周期中直接操作DOM不会出现DOM闪烁现象。而`useEffect`是异步触发的，并不会阻塞浏览器painting，为了分离js与渲染线程来提升性能，因此在`useEffect`中进行DOM操作会出现DOM闪烁，通常不会用到该Hook，React中不推荐去直接操作DOM，使用动画库除外。需要注意以下2点：
-1. `useLayoutEffect`在时间线上，触发优先与`useEffect`，具体的是在虚拟dom diff完成后并将更新属性更新到到真实DOM上后立即执行，此时浏览器还没有渲染绘制，会被js线程阻塞，此时直接修改DOM样式不会出现闪烁现象，而`useEffect`是使用`requestIdleCallback`创建的异步callback，如果在`useEffect`修改样式的话会出现样式突变闪烁现象
-2. `useLayoutEffect`中可以覆盖state控制的样式属性等，如果样式属性受state控制，那么`useLayoutEffect`会在每次样式改变后立即执行，看下面例子
+    1. `useLayoutEffect`在时间线上，触发优先与`useEffect`，具体的是在虚拟dom diff完成后并将更新属性更新到到真实DOM上后立即执行，此时浏览器还没有渲染绘制，会被js线程阻塞，此时直接修改DOM样式不会出现闪烁现象，而`useEffect`是使用`requestIdleCallback`创建的异步callback，如果在`useEffect`修改样式的话会出现样式突变闪烁现象
+    2. `useLayoutEffect`中可以覆盖state控制的样式属性等，如果样式属性受state控制，那么`useLayoutEffect`会在每次样式改变后立即执行，看下面例子
     ```typescript
     const Test = () => {
         const [left, setLeft] = useState(0);
@@ -228,7 +228,7 @@ React随着16版函数式组件的推广，hooks的概念也越来越普及，�
 - useOpaqueIdentifier：`[实验性Hook]`功能目前不明
 
 ## 原理
-Hooks用法比较简单，原理也需要做相应了解，一般面试可能会涉及到相关只是
+Hooks用法比较简单，原理也需要做相应了解，一般面试可能会涉及到相关知识
 - Hooks与组件的关系：React在渲染时会生成一个虚拟节点树（JSON，现在为Fiber链表），一个组件中所有的Hooks信息（称之为`memoizedState链表`）会存储对应组件Fibber节点上，跟组件生命周期关联，一同创建，一同销毁。
 - Hooks存储方式：单向链表，Rect中目前链表结构使用比较频繁，某些方面类似于数组，有些人在手写React源码时会用数组方式实现，其实并不正确，单向链表没有索引，仅存在游标，通过游标及next可以遍历整个链表，与数组相似的地方在于都是可遍历结构，不同的地方是数组可以根据索引获取任意位置的值，单向链表从HEAD开始仅能向下
 - Hooks 阶段：`mount`和`update`，分别对应组件创建和更新不同生命周期，在`mount`阶段创建链表节点并添加到Fiber节点属性上，在`update`阶段主要判断deps，更新链表值，返回原有值或新值。
@@ -243,6 +243,24 @@ Hooks用法比较简单，原理也需要做相应了解，一般面试可能会
 - 简单图解
 {% asset_img img-left mount.png mount阶段 %}
 {% asset_img img-left update.png update阶段 %}
+
+- `updateQueue`简单介绍
+    1. 生命周期：`updateQuene`是挂在在`memoizedState链表`中的一个子单向循环链表，生命周期跟hook链表节点等同，链表节点mount阶段创建，意味着不同的组件实例不会复用，组件释放时被释放回收。
+    2. 属性
+    ```typescript
+        type UpdateQueue<S, A> = {
+            pending: Update<S, A> | null,// 循环单向链表
+            dispatch: (A => mixed) | null,
+            lastRenderedReducer: ((S, A) => S) | null,// 缓存最新的reducer
+            lastRenderedState: S | null,// 最新值缓存，跟hook.memoizedState基本一样
+        };
+    ```
+    3. 循环的作用：`updateQuene`组成闭合循环，是为了更新时`do...while`中判断结束标志
+    4. `updateQueue`回收：pending属性相当于游标，每次更新会将队列中可同时更新的通过`do while`进行合并同时更新，同时置空pending，`清空`队列
+    5. 回收原理：涉及到链表数据结构特点，链表就是一群对象，然后相互引用，`updateQueue`设置pending=null之后引用断开，后面对象都是不被引用的无效对象，下次gc时会自动回收
+    6. 具体逻辑参考下图
+    {% asset_img img-left setState.png setState调用 %}
+    {% asset_img img-left getState.png useState获取 %}
 
 ## 优化注意
 1. State合并：很多时候一个组件中需要使用多个useState来分别存储不同的状态管理，但是需要注意React的setState触发render机制{% post_link react/react React底层原理分析 %}，在同步函数中如果多次调用setState则只会触发一次render，如果在异步中多次调用则触发n次render ,因此针对代码中出现的异步中多次setState的现象需要进行合并，合并总体方法就是较少useState的使用，或者render使用useMemo节流；

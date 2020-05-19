@@ -74,3 +74,10 @@ aside:
 inject:
   head:
   - <link rel="stylesheet" href="/custom.css">
+
+# 本地搜索配置
+local_search:
+  enable: true
+  labels:
+    input_placeholder: 搜索文章和随笔
+    hits_empty: "没有找到任何符合要求的内容: ${query}" # if there are no result

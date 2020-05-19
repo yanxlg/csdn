@@ -111,3 +111,9 @@ Flink:
   avatar: Blog 头像： https://blog.yanxlg.cn/img/avatar.png
   info: Blog 简洁： 每日一帖，掌握技术前线
   comment: 如果需要交换友链,请留言
+
+## 搜索插件
+search:
+  path: search.xml
+  field: all
+  content: true
