@@ -37,19 +37,19 @@ React16-之前的虚拟DOM树或者节点树大部分人都有所了解，本质
 ## React是一个单向数据流的库，状态驱动视图。
 
 ## 任务调度、分片
+Fiber之前React状态更新是通过`isBatchingUpdates`状态机来控制是立即执行`performWork`进行更新还是合并成`事务`进行一次行`commit`，而目前由于Fiber异步渲染思想，React的更新阶段分为`reconciliation`和`commit`两个。
 > Fiber核心是实现了一个基于优先级和requestIdleCallback的循环任务调度算法。它包含以下特性：(参考：fiber-reconciler)
 > - reconciliation阶段可以把任务拆分成多个小任务
 > - reconciliation阶段可随时中止或恢复任务
 > - 可以根据优先级不同来选择优先执行任务
 
-从其特性可看出，Fiber核心是更换了reconciliation阶段的运作。那么，问题来了：
-
-为什么对reconciliation阶段进行拆分，commit阶段呢？
-reconciliation阶段包含的主要工作是对current tree 和 new tree 做diff计算，找出变化部分。进行遍历、对比等是可以中断，歇一会儿接着再来。
+从其特性可看出，Fiber核心是更换了reconciliation阶段的运作。那么：
+- 为什么对reconciliation阶段进行拆分，而不在commit阶段处理：
+reconciliation阶段包含的主要工作是对current tree 和 new tree 做diff计算，找出变化部分。进行遍历、对比等是可以中断，延迟后继续执行的。
 commit阶段是对上一阶段获取到的变化部分应用到真实的DOM树中，是一系列的DOM操作。不仅要维护更复杂的DOM状态，而且中断后再继续，会对用户体验造成影响。在普遍的应用场景下，此阶段的耗时比diff计算等耗时相对短。
 所以，Fiber选择在reconciliation阶段拆分
 
-如何拆分呢?
+- 如何拆分：
 首先，我们可以通过 A Cartoon Intro to Fiber中的一张图来看：
 
 
@@ -58,6 +58,9 @@ commit阶段是对上一阶段获取到的变化部分应用到真实的DOM树�
 
 ## 状态跟新
 setState，React没有vue那种观察者模式，React主张一切有源，数据源主懂修改，修改时从当前节点创建更新任务
+
+setState前后发生了什么，怎么走更新事务的，什么时候创建任务
+
 
 1. setState合并更新策略：isBatchingUpdates：
 在 React 的 setState 函数实现中，会根据一个变量 isBatchingUpdates 判断是直接更新 this.state 还是放到队列中延时更新，而 isBatchingUpdates 默认是 false，表示 setState 会同步更新 this.state；但是，有一个函数 batchedUpdates，该函数会把 isBatchingUpdates 修改为 true，而当 React 在调用事件处理函数之前就会先调用这个 batchedUpdates将isBatchingUpdates修改为true，这样由 React 控制的事件处理过程 setState 不会同步更新 this.state。

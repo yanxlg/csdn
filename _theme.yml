@@ -1,7 +1,10 @@
 ## @override theme config
 avatar_effect: true
+
 canvas_nest:
   enable: true
+  count: 150
+
 highlight_retract: false
 highlight_copy: true
 
