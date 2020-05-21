@@ -11,9 +11,8 @@ React随着16版函数式组件的推广，hooks的概念也越来越普及，�
 
 ## Hooks
 - useContext：用于和React中的Context特性配合使用，可以直接在函数式组件中绑定Context的值，并订阅更新
-    ```jsx
+    ```javascript
         const GlobalContext = React.createContext<IGlobalContext>(null);
-
         const GlobalContextProvider: React.FC = props => {
             const contextRef = useRef(null);
             const [context, _setContext] = useState<IGlobalContext['context']>({
@@ -202,23 +201,23 @@ React随着16版函数式组件的推广，hooks的概念也越来越普及，�
 - useCallback：函数生成器，常规的函数写法在每次组件更新时都重新生成一个新的函数，useCallback会记录原函数，如果依赖参数没有变化则不会重新创建函数，直接返回原有函数，减少创建消耗，但在js中其实创建消耗很小，再加上使用useCallback会存在检测依赖过程，优化结果不明显，可用可不用，但是推荐使用，在函数体较大时还是有优势的
 - useMemo：[`常用Hook`]，常用于控制代码是否执行，或是否重新渲染
     1. 最常规用法，用于控制组件render，当deps不发生变化时不会重新render，直接返回原有虚拟节点
-        ```typescript
-        const Cmponent = ()=>{
-            return useMemo(()=>{
-                return <div></div>
-            },[]);// 仅执行一次render
-        }
+        ```javascript
+            const Component = ()=>{
+                return useMemo(()=>{
+                    return <div></div>
+                },[]);// 仅执行一次render
+            }
         ```
     2. 延伸用法（业务部分）,可以实现在渲染前根据条件进行一些处理，相对于不用useMemo可以进行deps比较，类似于React@16-中类组件的`componentWillReceiveProps`声明周期及16+中`getDerivedStateFromProps`静态声明周期，用来判断前后状态修改并执行相关操作，不同于`useEffect`的是该Hooks触发于render之前
-       ```typescript
-        const Cmponent = ({}:CmponentProps)=>{
-            useMemo(()=>{
+        ```javascript
+            const Component = ({}:ComponentProps)=>{
+                useMemo(()=>{
 
-            },[]);
-            return useMemo(()=>{
-                return <div></div>
-            },[]);// 仅执行一次render
-        }
+                },[]);
+                return useMemo(()=>{
+                    return <div></div>
+                },[]);// 仅执行一次render
+            }
         ```
 - useDebugValue：用于将label显示在React 调试工具`DevTools`中，调试用，编译会自动忽略
 - useResponder：`[实验性Hook]`功能目前不明
@@ -286,7 +285,7 @@ Hooks用法比较简单，原理也需要做相应了解，一般面试可能会
                     setLoading(false);
                 });
             },[]);
-            
+
         ```
     3. 通过`useMemo`节流：需要注意useMemo的deps选择，应该选异步中最后一个setState的变量，否则在render时取到的total值会是错误的，该方式会触发组件函数重新执行，仅不会触发render，因此该方法相对于上面两种较差
         ```typescript
