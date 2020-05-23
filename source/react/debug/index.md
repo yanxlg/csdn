@@ -39,6 +39,7 @@ alias: {
 +  'shared': path.resolve(__dirname, '../react/packages/shared'),
 +  'react-reconciler': path.resolve(__dirname, '../react/packages/react-reconciler'),
 +  'legacy-events':path.resolve(__dirname, '../react/packages/legacy-events'),
++  'scheduler':path.resolve(__dirname, '../react/packages/scheduler'),
 },
 ```
 5. 修改环境变量：`config/env.js`
@@ -169,6 +170,20 @@ const stringified = {
             'time. There is no runtime version.',
         );
     }
+    ```
+    - scheduler编译错误
+    ![](./index/7.png)
+    修改`/react/packages/scheduler/index.js`
+    ```diff
+        export * from './src/Scheduler';
+    +   export * from "./src/forks/SchedulerHostConfig.mock";
+    ```
+    - SchedulerHostConfig报错
+    ![](./index/8.png)
+    修改`/react/packages/scheduler/src/SchedulerHostConfig.js`
+    ```diff
+    +   export * from "./forks/SchedulerHostConfig.mock";
+    -   throw new Error('This module must be shimmed by a specific build.');
     ```
 
 ## 结尾
