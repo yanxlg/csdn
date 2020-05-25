@@ -4,9 +4,9 @@ title: React
 tags: react
 categories: react
 date: 2019-9-20 13:20:41
-password: mikemessi
-message: 本文暂不开放，需要密码才可阅读.
-wrong_pass_message: 密码错误，请输入正确的密码.
+cover: /images/top/react.jpeg
+top_img: /images/cover/react.png
+top: true
 ---
 ## 前言
 React 近两年更新也相对较大，从节点树到跟新机制，到数据结构都有了很大的变化，本文主要介绍16.4+以后的React源码分析及原理，之前的相关内容已删除，不做保留。
@@ -52,9 +52,11 @@ commit阶段是对上一阶段获取到的变化部分应用到真实的DOM树�
 所以，Fiber选择在reconciliation阶段拆分
 
 - 如何拆分：
-> 1. 用户调用ReactDOM.render传入组件，React创建Element树;
-> 2. 在第一次渲染时，创建vdom树，用来维护组件状态和dom节点的信息（如List/Button/Item等）。当后续操作如render或setState时需要更新，通过diff算出变化的部分；
-> 3. 根据变化的部分更新vdom树、调用组件生命周期函数等，同步应用到真实的DOM节点中。
+{% note primary %}
+1. 用户调用ReactDOM.render传入组件，React创建Element树;
+2. 在第一次渲染时，创建vdom树，用来维护组件状态和dom节点的信息（如List/Button/Item等）。当后续操作如render或setState时需要更新，通过diff算出变化的部分；
+3. 根据变化的部分更新vdom树、调用组件生命周期函数等，同步应用到真实的DOM节点中。
+{% endnote %}
 在第二阶段，Fiber是把render/update分片，拆解成多个小任务来执行，每次只检查树上部分节点，做完此部分后，若当前一帧（16ms）内还有足够的时间就继续做下一个小任务，时间不够就停止操作，等主线程空闲时再恢复。
 这种停止/恢复操作，需要记录上下文信息。而当前只记录单一dom节点的vDom tree 是无法完成的，
 Fiber Tree节点结构大致如下：
@@ -105,7 +107,7 @@ var IDLE_PRIORITY = maxSigned31BitInt;
 
 #### 任务执行流程
 创建任务的唯一接口为 `unstable_scheduleCallback(priorityLevel, callback, options)` 函数。任务分为两种，同步任务或异步延时任务。同步任务在 `unstable_scheduleCallback` 调用期间就会添加到 `taskQueue` 队列，且通过 `requestHostCallback` 函数立即执行；异步延时任务会添加到 `timerQueue` 队列，且通过 `requestHostTimeout` 函数延后执行。`unstable_scheduleCallback` 的执行流程图如下：
-{% asset_img img-left task.jpg 任务执行流程 %}
+{% asset_img img-left task.png 任务执行流程 %}
 在上图中，以 `workLoop` 方式循环调度 `taskQueue` 队列或以 `handleTimeout` 递归调度 `timerQueue` 队列这两种方式，只有一个在激活状态，也即 `requestHostCallback`、`requestHostTimeout` 只有一个在调用周期中。因为，`taskQueue` 队列调度完毕，会调用 `requestHostTimeout` 处理 `timerQueue` 队列；`timerQueue` 队列有一个任务进入 `taskQueue`，又会调用 `requestHostCallback` 处理 `taskQueue` 队列。
 
 另外，`workLoop` 循环也使任务具有可并发执行的特性。任务若返回函数，这个函数将作为 `currentTask.callback` 执行内容，即在 `workLoop` 循环中保证任务的回调被立即执行。
@@ -170,24 +172,28 @@ ReactDOM.render(
 {% asset_img img-left tree.png FiberTree %}
 再次setState或render时，构建workInProgress tree:
 {% asset_img img-left clone.png Clone FiberTree %}
-> 1. 先把根节点 Test克隆出来，并用child属性指向它在fiber tree中的子节点div.style
-2. 把div.style从fiber tree中克隆出来，需要更新的话，加一个tag标志
-3. 更新div.style节点的状态，属性的指向等，并通过render获取到它的新子节点
-4. 尽量复用旧子节点Count来创建新子节点的workInProgress结构
-5. 把新节点Count做为下一个任务，调用requestIdleCallback获取当前帧所剩余的时间，如果还足够，就继续Count的任务，重复2-4，否则，就等主线程空闲后再开始循环
-6. 当子节点Count中没有child属性的指向，表示已到达底部。会把diff时产生的effect list会merge回return属性指向的父节点div.style上
-7. 当父节点div.style没有兄弟节点时，会一直向上return回根节点，并把每个节点上产生的effect-list合并到根节点上。任务循环结束
+
+{% note info%}
+1. 从Root节点向下遍历，查找相关节点Test
+2. 先把根节点 Test克隆出来，并用child属性指向它在fiber tree中的子节点div.style
+3. 把div.style从fiber tree中克隆出来，需要更新的话，加一个tag标志
+4. 更新div.style节点的状态，属性的指向等，并通过render获取到它的新子节点
+5. 尽量复用旧子节点Count来创建新子节点的workInProgress结构
+6. 把新节点Count做为下一个任务，调用requestIdleCallback获取当前帧所剩余的时间，如果还足够，就继续Count的任务，重复2-4，否则，就等主线程空闲后再开始循环
+7. 当子节点Count中没有child属性的指向，表示已到达底部。会把diff时产生的effect list会merge回return属性指向的父节点div.style上
+8. 当父节点div.style没有兄弟节点时，会一直向上return回根节点，并把每个节点上产生的effect-list合并到根节点上。任务循环结束
+{% endnote %}
 
 ## 状态跟新
-状态合并策略
-setState，React没有vue那种观察者模式，React主张一切有源，数据源主懂修改，修改时从当前节点创建更新任务
+React状态更新并没有vue那种跟踪机制，vue中是通过发布订阅模式去控制相关节点渲染的，核心使用的是`Proxy`或者`Getter Setter`，从而实现状态更新监听，并通过listener回调更新每个节点，相对来说，静态化内存，vue比React高，因为一个应用vue中会创建大量的订阅者，这也是大家说`React适合大项目，Vue适合中小项目`的原因之一。React中状态更新都是从跟节点root出发，进行链表遍历（遍历结果会缓存，并不是每次都需要从头遍历），生成需要更新的`alternate`(等同于`workInProgress` tree)子树，创建更新任务，并按照异步任务执行过程执行更新。
 
-setState前后发生了什么，怎么走更新事务的，什么时候创建任务
+1. setState怎么实现合并的？
+setState在`合成事件`和`钩子函数`中同步调用是会进行合并的，因为commit是在`合成事件`和`钩子函数`的调用顺序之后，因此才形成了合并更新，在旧版本中是通过变量`isBatchingUpdates`控制是否当前正在更新，后续更新操作是否放在消费队列中执行实现的，如果已经在执行更新则放在异步事务中，否则添加到当前消费队列，等待commit。默认是false，表示会立即更新，但是在`合成事件`和`钩子函数`的前置钩子中会调用`batchedUpdates`，该函数会把 `isBatchingUpdates` 修改为 true ,这样由 React 控制的事件处理过程 setState 不会同步更新 this.state。最新代码中已经删除了`isBatchingUpdates`，在Fiber任务队列中做了处理，一次commit之后会把前面的update Task合并执行，因为都是即时任务，超时都是-1，会被立即执行。
+2. 同步异步
+setState 只在`合成事件`和`钩子函数`中是“异步”的，在`原生事件`和`setTimeout`等中都是同步的。异步同步并不是说setState就是异步方法，其本身执行的过程和代码都是同步的，只是在React封装的事件机制`合成事件`和`钩子函数`中，commit操作是函数执行完成后执行的，而在其他场景，调用setState之后就会执行commit，因此出现了异步同步的现象，当然，同步并不是表示在调用setState之后可以立即获取到最新的state，最新的state在更新时才能获取，而更新是异步的，因此setState之后不管什么场景都无法直接获取到最新的state。`可以通过第二个参数callback来获取到更新后的结果setState(partialState, callback)`，callback会在组件更新之后执行，等同于`componentDidUpdate`
 
+## Context源码（临时记录）
+从跟节点通过alternate遍历出依赖的子节点树，进行更新，感觉每次都是从父节点遍历，遍历后进行记忆，与Vue使用数据拦截不同
 
-1. setState合并更新策略：isBatchingUpdates：
-在 React 的 setState 函数实现中，会根据一个变量 isBatchingUpdates 判断是直接更新 this.state 还是放到队列中延时更新，而 isBatchingUpdates 默认是 false，表示 setState 会同步更新 this.state；但是，有一个函数 batchedUpdates，该函数会把 isBatchingUpdates 修改为 true，而当 React 在调用事件处理函数之前就会先调用这个 batchedUpdates将isBatchingUpdates修改为true，这样由 React 控制的事件处理过程 setState 不会同步更新 this.state。
-
-## Context源码
-
-## alternate：在调用render或setState后，会克隆出一个镜像fiber，diff产生出的变化会标记在镜像fiber上。而alternate就是链接当前fiber tree和镜像fiber tree, 用于断点恢复。
+## 总结
+以上分析仅个人针对源码理解，如有错误，欢迎提出交流，无法保证与最新版本完全符合，目前React在快速迭代中。
