@@ -59,7 +59,14 @@ social:
   fa fa-rss: /atom.xml || RSS
 
 reward:
-  enable: false
+  enable: true
+  QR_code:
+    - itemlist:
+        img: /images/wechat.png
+        text: 微信
+    - itemlist:
+        img: /images/alipay.png
+        text: 支付宝
 
 anchor: true
 
@@ -85,3 +92,12 @@ local_search:
   labels:
     input_placeholder: 搜索文章和随笔
     hits_empty: "没有找到任何符合要求的内容: ${query}" # if there are no result
+
+gitalk:
+  enable: true
+  client_id: '12a1217ff53b08c6c73a'
+  client_secret: '7ee99a0195d3d7837a04a7eeb423f98c960d9f60'
+  repo: 'yanxlg.github.io'
+  owner: 'yanxlg'
+  admin: 'yanxlg'
+  count: true
