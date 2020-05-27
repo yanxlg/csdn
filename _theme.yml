@@ -1,4 +1,10 @@
 ## @override theme config
+subtitle:
+  loop: true
+  sub:
+    - 每日一帖&#44;掌握技术前线
+    - One post every day to master the front technology
+
 avatar_effect: true
 
 canvas_nest:

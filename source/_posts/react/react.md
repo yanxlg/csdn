@@ -7,6 +7,22 @@ date: 2019-9-20 13:20:41
 cover: /images/top/react.jpeg
 top_img: /images/cover/react.png
 top: true
+keywords:
+  - React原理分析
+  - Fiber
+  - Fiber算法
+  - Fiber优先级
+  - Fiber调度
+  - Fiber任务循环
+  - React状态更新
+description: 
+  - React原理分析
+  - Fiber
+  - Fiber算法
+  - Fiber优先级
+  - Fiber调度
+  - Fiber任务循环
+  - React状态更新
 ---
 ## 前言
 React 近两年更新也相对较大，从节点树到跟新机制，到数据结构都有了很大的变化，本文主要介绍16.4+以后的React源码分析及原理，之前的相关内容已删除，不做保留。

@@ -7,6 +7,48 @@ top: true
 date: 2019-9-20 13:20:41
 cover: /images/top/hooks.jpeg
 top_img: /images/cover/hooks.png
+keywords:
+  - ReactHooks
+  - ReactHooks原理
+  - ReactHooks优化
+  - useState
+  - useState更新机制
+  - useContext
+  - useReducer
+  - useRef
+  - useLayoutEffect
+  - useEffect
+  - useImperativeHandle
+  - useCallback
+  - useMemo
+  - useDebugValue
+  - useResponder
+  - useDeferredValue
+  - useTransition
+  - useMutableSource
+  - useOpaqueIdentifier
+  - updateQueue
+description: 
+    - ReactHooks
+  - ReactHooks原理
+  - ReactHooks优化
+  - useState
+  - useState更新机制
+  - useContext
+  - useReducer
+  - useRef
+  - useLayoutEffect
+  - useEffect
+  - useImperativeHandle
+  - useCallback
+  - useMemo
+  - useDebugValue
+  - useResponder
+  - useDeferredValue
+  - useTransition
+  - useMutableSource
+  - useOpaqueIdentifier
+  - updateQueue
 ---
 ## 前言
 React随着16版函数式组件的推广，hooks的概念也越来越普及，其实钩子函数在React中一直存在，只是以前不对外使用，React在底层每个生命周期都有前置钩子和后置钩子，因此hooks在React中尤为重要。
