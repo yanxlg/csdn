@@ -86,10 +86,10 @@ theme: Butterfly
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type: git
+- type: git
   repo: https://github.com/yanxlg/yanxlg.github.io.git
   branch: master
-
+- type: baidu_url_submitter
 
 # Security
 ##
