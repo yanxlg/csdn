@@ -5,8 +5,8 @@
 # Site
 title: yanxlg@blog
 subtitle: 
-description: 大前端技术博客，涉及React、Vue、H5、Nodejs、Deno、Nginx、ReactNative、react-native、react、vue、h5、nodejs、node、Node、Webpack、webpack、weex、Weex、umi、rax
-keywords: React、Vue、H5、Nodejs、Deno、Nginx、ReactNative、react-native、react、vue、h5、nodejs、node、Node、Webpack、webpack、weex、Weex、umi、rax
+description: 前端技术博客，涉及React、Vue、H5、Nodejs、Deno、Nginx、ReactNative、Webpack、Weex、umi、rax、egg
+keywords: React、Vue、H5、Nodejs、Deno、Nginx、ReactNative、react-native、react、vue、h5、nodejs、node、Node、Webpack、webpack、weex、Weex、umi、rax、egg
 author: yanxlg
 language: zh-CN
 timezone:
@@ -83,7 +83,9 @@ theme: Butterfly
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
 - type: git
-  repo: https://github.com/yanxlg/yanxlg.github.io.git
+  repo:
+    github: https://github.com/yanxlg/yanxlg.github.io.git
+    coding: https://e.coding.net/yanxlg/csdn/csdn.git 
   branch: master
 - type: baidu_url_submitter
 

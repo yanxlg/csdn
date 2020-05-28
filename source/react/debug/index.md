@@ -1,5 +1,5 @@
 ---
-title: debug
+title: React Debug
 date: 2020-05-22 10:28:01
 categories: react
 top: true
