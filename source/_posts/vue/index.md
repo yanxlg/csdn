@@ -13,7 +13,7 @@ description:
   - Vue双向绑定
   - Vue状态更新
 abbrlink: c0add594
-date: 2020-05-27 16:24:32
+date: 2019-12-16 19:24:32
 ---
 ## 前言
 Vue 作为近两年跟React几乎并驾齐驱的前端框架，其在前端开发中的地位是尤其重要，其轻量、易用、灵活、入门简单的特点收到很多前端开发者的推崇，本文主要揭秘Vue的架构、响应式原理、状态更新及vue@3重大更新。
@@ -375,7 +375,7 @@ export function queueWatcher (watcher: Watcher) {
   }
 }
 ```
-当为同步更新时立即执行flush，输出更新，当为异步时，延迟更新，等待下一帧再输出更新，同步异步与React中类似，事件模型和生命钩子中都是异步，即进行状态更新合并后更新视图，而在定时器，Promise等异步操作中则立即执行视图更新，视图更新过程主要时Virtual DOM diff，当然与React不同的是在diff阶段Vue会去做一层校验，判断哪些是不需要更新的，而React中需要自己通过`shouldComponentUpdate`或者`memo`实现
+当为同步更新时立即执行flush，输出更新，当为异步时，延迟更新，等待下一帧再输出更新，同步异步与React中类似，事件模型和生命钩子中都是异步，即进行状态更新合并后更新视图，而在定时器，Promise等异步操作中则立即执行视图更新，视图更新过程主要时Virtual DOM diff，当然与React不同的是在diff阶段Vue做了一层优化，即Vue是以组件为单位进行遍历，而React是从根节点判断哪些不需要更新，React中需要自己通过`shouldComponentUpdate`或者`memo`实现更新逻辑判断。因此才有`Vue速度比React快`的说法，当然这个快其实是基于内存开销的基础上的，而React由于JSX的影响，暂时无法做到局部更新Virtual DOM，从而在React16+中推出时间分片、异步渲染的方式进行优化。
 
 ## nextTick原理
 首先看Vue中的源码：
@@ -493,5 +493,21 @@ export function nextTick (cb?: Function, ctx?: Object) {
 ```
 通过上面源码可以发现，nextTick本质上就是创建一个异步任务，通过创建下一轮任务队列执行的任务来延迟函数调用，通过`Promise.then`、`setImmediate`、`setTimeout 0`等手段实现，具体js中任务队列相关可以阅读[js 事件驱动](/h5/eventloop.html)
 
-## Vue3.0 探索
-待补充
+## Vue3.0 变化
+- 全面支持`typescript`：源码完全采用typescript开发
+- 使用`Proxy`代替`Object.defineProperty`：放弃低版本浏览器，使用新的api来实现数据劫持功能，有效提升效率并降低内存消耗，低版本浏览器中如果不支持`Proxy`需要引入额外lib
+- Virtual DOM 重构：在原有的优化基础上将模版中节点分为动态和静态节点，在更新时以组件为单位，遍历动态节点，vue3.0将 vdom 更新性能由与模版整体大小相关提升为与动态内容的数量相关
+- `Function_based API`：引入React中函数式编程思想，解决原有写法中this属性类型声明问题，同时替代`mixins`实现代码共享，解决`mixins`存在的一些问题
+  - this属性类型声明问题：data中的属性通过this访问，从代码理解上this应无法直接访问data中属性，不符合代码正常逻辑
+  - `mixins`问题：mixins 的最大缺点在于我们对它实际上添加到组件中的行为一无所知。这不仅使代码变得难以理解，而且还可能导致名称与现有属性和函数发生冲突
+- `nextTick`实现调整：
+```typescript
+const p = Promise.resolve();
+export function nextTick(fn?: () => void): Promise<void> {
+  return fn ? p.then(fn) : p
+}
+```
+`nextTick`从原来的多种方式变成了仅用Promise来创建微任务的方式，主要由于主流浏览器都已经支持Promise，兼容性写法已经没有必要，减少兼容代码有效减少vue体积
+
+## 总结
+以上分析仅个人针对源码理解，如有错误，欢迎提出交流，无法保证与最新版本完全符合，目前Vue@3在Beta迭代中。
