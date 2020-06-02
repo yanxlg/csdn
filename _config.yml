@@ -22,6 +22,10 @@ abbrlink:
   rep: hex    # 进制：dec(default) and hex
 permalink_defaults:
 
+pretty_urls:
+  trailing_index: false
+  trailing_html: false
+
 # Directory
 source_dir: source
 public_dir: public

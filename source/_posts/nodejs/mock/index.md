@@ -1,6 +1,7 @@
 ---
 title: Mock Server
 categories: nodejs
+abbrlink: 9d66f38a
 date: 2020-05-21 16:47:21
 ---
 ## 前言
@@ -8,7 +9,7 @@ date: 2020-05-21 16:47:21
 
 ## 设计思路
 具体的设计思路如下图：
-![逻辑设计图](./index/design.png)
+{% asset_img design.png 逻辑设计图 %}
 由上图可以知道我们最终要的是实现mock缓存池，缓存池中存的是key-value健值对，键为`GET /api/xxx`或`POST /api/xx`的格式，由method+url组成，value支持`json`和`koa midway`。
 - 缓存池实现：
     - 服务初次启动时，通过fs遍历mock文件夹下所有文件，使用require获取export的内容，将其处理后缓存在缓存变量中

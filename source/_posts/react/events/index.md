@@ -1,5 +1,6 @@
 ---
 title: events
+abbrlink: 5387574a
 date: 2020-05-22 10:08:24
 ---
 

@@ -1,8 +1,9 @@
 ---
 title: React Debug
-date: 2020-05-22 10:28:01
 categories: react
 top: true
+abbrlink: 1d2a4632
+date: 2020-05-22 10:28:01
 ---
 ## 前言
 React框架一直依赖都比较神秘，其原理大部分人都是通过博客进行了解，但是这种了解有局限性，博客中写的并不一定详细，稍微误差就容易造成理解歧义，而React源码的阅读相对来说比较困难，并不想vue源码一样直观，而我们想要详细了解一个框架源码就必须要对源码进行调试，通常项目中虽然也能调试，但是调试的都是node_modules下的react.development.js，比较难以阅读。本文主要介绍react真实源码的调试方式，通过这种调试我们可以更方便了解React每个package的作用。

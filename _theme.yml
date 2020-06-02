@@ -112,3 +112,5 @@ baidu_site_verification: cg1zWFKfJ7
 
 baidu_push:
   enable: true
+
+preloader: true
