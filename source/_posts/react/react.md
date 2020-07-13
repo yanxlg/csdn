@@ -15,7 +15,7 @@ keywords:
   - Fiber调度
   - Fiber任务循环
   - React状态更新
-description: 
+description:
   - React原理分析
   - Fiber
   - Fiber算法
@@ -34,11 +34,11 @@ React 近两年更新也相对较大，从节点树到跟新机制，到数据�
 ## 节点树
 React16-之前的虚拟DOM树或者节点树大部分人都有所了解，本质上是一个大的JSON对象，从根节点开始children存放所有子节点数组这种层层嵌套的结构，如下图所示：
 {% asset_img img-left node_list_old.png 旧版节点树 %}
-从上图可以看出树结构就是通过每个节点的children组成父子关系的json结构，当发生更新时从触发节点向下通过深度递归的方式进行遍历节点更新；优先完成子节点更新。其遍历都是通过数组索引进行。然而在现在，前端对于性能要求越来越高，这种设计结构已经不满足用户需求了，当树结构嵌套过深时，DOM树更新会阻塞用户行为，例如输入卡顿，动画卡顿等等，主要原因还是因为js是同步的，DOM树的Diff及更新都是在js线程中执行的，当一次更新任务耗时较长时明显会阻塞js其他行为。因此在React16开始，对于DOM树结构做了改变，由原来的JSON树变成了`链表树`，其结构图如下：  
+从上图可以看出树结构就是通过每个节点的children组成父子关系的json结构，当发生更新时从触发节点向下通过深度递归的方式进行遍历节点更新；优先完成子节点更新。其遍历都是通过数组索引进行。然而在现在，前端对于性能要求越来越高，这种设计结构已经不满足用户需求了，当树结构嵌套过深时，DOM树更新会阻塞用户行为，例如输入卡顿，动画卡顿等等，主要原因还是因为js是同步的，DOM树的Diff及更新都是在js线程中执行的，当一次更新任务耗时较长时明显会阻塞js其他行为。因此在React16开始，对于DOM树结构做了改变，由原来的JSON树变成了`链表树`，其结构图如下：
 {% asset_img img-left node_list_new.png 旧版节点树 %}
 其结构变成了链表树，父节点只跟第一个子节点有直接关系，其他子节点都是右序节点，更新遍历是通过树的深度优先算法进行遍历
-> Fiber节点中的`return`和`stateNode`属性是个私有属性，默认情况下不希望开发者使用的，因此typing文件中并没有对外开放，但是部分场景下我们可以通过这两个属性实现获取父组件属性的需求，例如`嵌套权限控制`等，想要了解可以通过控制台输出查看即可，获取当前Fiber节点的办法：
-> - 类组件中：this._reactInternalFiber 
+> Fiber节点中的`return`和`elementType`属性是个私有属性，默认情况下不希望开发者使用的，React的typing文件中并没有对外开放，但是部分场景下我们可以通过这两个属性实现获取父组件属性的需求，例如{% post_link react/permission `树结构下前端权限架构` %}等，想要了解可以通过控制台输出查看即可，获取当前Fiber节点的办法：
+> - 类组件中：this._reactInternalFiber
 > - 函数式组件中：JSX变量的`_owner`属性，例如：
 > ```typescript
 >    const pageJSX = <div>1111</div>;
@@ -99,7 +99,7 @@ window.requestIdleCallback(callback[, options:{timeout?:number}]);
 浏览器提供的`requestIdleCallback` API可以让浏览器在空闲时间执行回调（开发者传入的方法），在回调参数中可以获取到当前帧（16ms）剩余的时间。利用这个信息可以合理的安排当前帧需要做的事情，如果时间足够，那继续做下一个任务，如果时间不够就歇一歇，挂起现有任务，再次调用requestIdleCallback来探知主线程不忙的时候，再继续恢复任务。
 React 为了兼容大部分浏览器，自己实现了`requestIdleCallback` API,利用`Message`事件与`requestAnimationFrame`实现，具体可以查看源码[Scheduler](https://github.com/facebook/react/blob/master/packages/scheduler/src/Scheduler.js)
 
-#### 优先级任务调度 
+#### 优先级任务调度
 不同的任务分配不同的优先级，Fiber根据任务的优先级来动态调整任务调度，会优先执行高优先级的任务
 ```typescript
 export const ImmediatePriority = 1;// 最紧急的任务

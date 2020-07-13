@@ -66,24 +66,34 @@ IOC是`Inversion of Control`的缩写，有些翻译过来叫`控制反转`，�
 ## 使用方式
 ```typescript
 // utils.ts
-@Injectable()
+@Injectable({scope:Scope.Request})
 export class Utils {
+    constructor() {
+        console.log("utils 类实例化");
+    }
     public test(){
-
+        console.log("我是 utils 的 test方法");
     }
 }
+
 // userService.ts
 @Injectable({scope:Scope.Request})
 export class UserService {
+    constructor() {
+        console.log("UserService 创建实例");
+    }
     @Inject()
     private utils: Utils;
 
     public getUserIdBySession(){
+        console.log("called is UserService.getUserIdBySession")
         this.utils.test();
     }
 }
 
+
 // userController
+@Controller()
 export default class UserController {
     @Inject()
     private utils: Utils;
@@ -91,13 +101,13 @@ export default class UserController {
     @Inject()
     private userService: UserService;
 
-    @Get('/info')
     private async getUserInfo() {
         const userId = this.userService.getUserIdBySession();
         this.utils.test();
         return 'success';
     }
 }
+
 ```
 在上述代码中，`Utils`类在被`scanner`扫描到后会立即创建一个该类的唯一实例，跟当前进程关联，`UserService`类由于`Scope`是`Request`，因此在请求被建立并用到该类对象时才会被创建，也就是在`UserController`被实例化时一起被创建且被注入到`UserController`实例中，而`UserController`和`UserService`中的`Utils`都是直接被注入启动时已经创建好的实例，当然，这仅仅是`IOC`中常规的使用方式，还有其他的例如构造函数注入，方法参数注入等等，基本原理都是一样的。
 
@@ -108,22 +118,42 @@ export default class UserController {
 
 2. 注入装饰器实现
 ```typescript
-// 提供者，可注入类
-export interface InjectableOptions {
-  /**
-   * Specifies the lifetime of an injected Provider or Controller.
-   */
-  scope?: Scope;// Scope 类型见上文生命周期
+// Injectable.ts
+import "reflect-metadata";
+
+export enum Scope {
+    Request,
+    Transient,
+    SignleTon
 }
 
+export interface InjectableOptions {
+    /**
+     * Specifies the lifetime of an injected Provider or Controller.
+     */
+    scope?: Scope;// Scope 类型见上文生命周期
+}
+
+export const SCOPE_OPTIONS_METADATA="scope_option_metadata";
 /**
 * 用于装饰支持注入的类，表示允许通过注入方式创建对象，添加该元数据方便scanner扫描并分析哪些类需要进行注入管理
 **/
+
 export function Injectable(options?: InjectableOptions): ClassDecorator {
-  return (target: object) => {
-    Reflect.defineMetadata(SCOPE_OPTIONS_METADATA, options, target);
-  };
+    return (target: object) => {
+        Reflect.defineMetadata(SCOPE_OPTIONS_METADATA, options, target);
+    };
 }
+
+
+// Inject.ts
+import "reflect-metadata";
+
+export const PROPERTY_DEPS_METADATA = 'property_deps_metadata';
+
+export const SELF_DECLARED_DEPS_METADATA = 'self_declared_deps_metadata';
+
+const isFunction = (fun:any)=>typeof fun === 'function';
 
 /**
 * 用于装饰被注入属性，主要是将一个类的依赖注入数据都添加到该类的构造函数上，当Scanner创建该类时就可以直接读取依赖元数据进而创建并注入需要的依赖对象
@@ -134,7 +164,7 @@ export function Inject<T = any>(token?: T) {
         const type =
             token && isFunction(token) ? ((token as any) as () => void).name : token;
 
-        if (!isUndefined(index)) {
+        if (index !== void 0) {
             let dependencies =
                 Reflect.getMetadata(SELF_DECLARED_DEPS_METADATA, target) || [];
 
@@ -160,21 +190,7 @@ export function Inject<T = any>(token?: T) {
 核心代码实现：
 ```typescript
     // IOC 容器
-    class IOCContainer{
-        private _injectables = new Map<any, InstanceWrapper<unknown>>();// 实例池容器
-        public addItem(metadataType:Type<any>){// 添加IOC容器管理类，通常scanner调用
-            this._injectables.add(metadataType.name,new InstanceWrapper({
-                name: metadataType.name,
-                metatype: metadataType,
-                isResolved: false,
-                instance: null,
-                host: this,
-            }));// 创建该类的实例池
-        }
-        public getInjectables(metadataType:Type<any>){
-            return this._injectables.get(metadataType.name);// 获取实例池
-        }
-    }
+    import {PROPERTY_DEPS_METADATA} from "./Inject";
 
     export interface InstancePerContext<T> {
         instance: T;
@@ -184,19 +200,141 @@ export function Inject<T = any>(token?: T) {
     }
 
     class InstanceWrapper{
+        constructor(private name:string,public metatype:Type<any>,public metadatas:Array<any>) {
+
+        }
         private values = new WeakMap<any, InstancePerContext<unknown>>();// 实例池容器
         public loadInstanceByContextId(contextId:any){
-            return values.get(contextId);
+            return this.values.get(contextId);
         }
         public addInstance(contextId:any,instance:any){
             // 简单设置
-            values.set(contextId,{
+            this.values.set(contextId,{
                 instance:instance,
                 isResolved:true,
                 isPending:false
             });
         }
+        public getInstance(contextId:any){
+            // 获取实例，如果不存在则创建
+            if(this.values.has(contextId)){
+                return this.values.get(contextId);
+            }else{
+                const instance = Reflect.construct(this.metatype, []);
+                this.values.set(contextId,instance);
+                return instance;
+            }
+        }
     }
+
+    export type Type<T> = new (...args: any[]) => T;// 类
+
+    export class IOCContainer{
+        private _injectables = new Map<any, InstanceWrapper>();// 实例池容器
+        private _controllers = new Map<any, InstanceWrapper>();// 实例池容器
+
+        public addController(metadataType:Type<any>){
+            const metadatas = Reflect.getMetadata(PROPERTY_DEPS_METADATA, metadataType);// 获取依赖 deps
+            this._controllers.set(metadataType.name,new InstanceWrapper(metadataType.name,metadataType,metadatas));// 创建该类的实例
+        }
+
+        public addInjector(metadataType:Type<any>){// 添加IOC容器管理类，通常scanner调用
+            const metadatas = Reflect.getMetadata(PROPERTY_DEPS_METADATA, metadataType);// 获取依赖 deps
+            this._injectables.set(metadataType.name,new InstanceWrapper(metadataType.name,metadataType,metadatas));// 创建该类的实例
+        }
+        public getInjectable(type:string){
+            return this._injectables.get(type);// 获取实例池
+        }
+        public getController(metadataType:Type<any>){
+            return this._controllers.get(metadataType.name);
+        }
+    }
+```
+4. 扫描器
+```typescript
+import UserController from "./demo/Controller";
+import {UserService} from "./demo/Service";
+import {Utils} from "./demo/utils";
+import {IOCContainer, Type} from "./IOCContainer";
+import "reflect-metadata";
+import {PROPERTY_DEPS_METADATA} from "./Inject";
+import {SCOPE_OPTIONS_METADATA} from "./Injectable";
+import {CONTROLLER_TYPE} from "./Controller";
+
+class Scanner {
+    private iocContainer = new IOCContainer();
+
+    constructor() {
+        // 扫描项目中所有类，此处demo写死
+        const classes = [UserController, UserService, Utils];
+
+        // 初始化容器
+        classes.forEach((classType) => {
+            const isInjectable = Reflect.hasOwnMetadata(SCOPE_OPTIONS_METADATA, classType);// 获取提供者
+            const isController = Reflect.hasOwnMetadata(CONTROLLER_TYPE,classType);
+            if (isInjectable) {
+                this.iocContainer.addInjector(classType);
+            }
+            if(isController) {
+                this.iocContainer.addController(classType);
+            }
+        });
+    }
+
+    private loadDeeps(contextId: Object,metadatas:Array<{key:string;type:string}>,callback:(instances:Array<{
+        key: string;
+        instance: any;
+    }>)=>any){
+        const instances = metadatas.map((metadata)=>{
+            const instanceWrapper = this.iocContainer.getInjectable(metadata.type);
+            const instance = instanceWrapper.getInstance(contextId);
+            if(instanceWrapper.metadatas && instanceWrapper.metadatas.length){
+                const _callback = (instances: Array<{
+                    key: string;
+                    instance: any;
+                }>) => {
+                    instances.forEach(({key, instance:ins}) => {
+                        Reflect.set(instance, key, ins);
+                    });
+                    return {
+                        key:metadata.key,
+                        instance
+                    };
+                };
+                return this.loadDeeps(contextId,instanceWrapper.metadatas,_callback);
+            }
+            return {
+                key:metadata.key,
+                instance
+            };
+        });
+        return callback(instances);
+    }
+
+    public loadController(contextId: Object, controllerClass: Type<any>) {// controller
+        const instanceWrapper = this.iocContainer.getController(controllerClass);
+        const instance = instanceWrapper.getInstance(contextId);
+        if(instanceWrapper.metadatas && instanceWrapper.metadatas.length){
+            const _callback = (instances: Array<{
+                key: string;
+                instance: any;
+            }>) => {
+                instances.forEach(({key, instance:ins}) => {
+                    Reflect.set(instance, key, ins);
+                });
+                return instance;
+            };
+            return this.loadDeeps(contextId,instanceWrapper.metadatas,_callback);
+        }
+        return instance;
+    }
+
+    public receiveRequest(request:Object) {
+        return this.loadController(request, UserController);
+    }
+}
+
+export default Scanner;
 ```
 简化核心代码就如上，在基础上扩展异步构造方法的支持`isPending`属性控制等逻辑就可以形成完整的IOC框架，具体的可以参考[Nest.js源码](https://github.com/nestjs/nest)，或者参考我个人造的轮子[`flybirds`](https://github.com/yanxlg/sky)
 
