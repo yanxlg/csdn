@@ -5,6 +5,9 @@ date: 2020-12-02 19:09:14
 tags:
     - design
     - react
+password: mikemessi
+message: 本文暂不开放，需要密码才可阅读.
+wrong_pass_message: 密码错误，请输入正确的密码.
 ---
 ## 需求
 为了实现快速生成多元化、多样化的网站，实现站点风格、元素自定义，从而解决UI相似，第三方平台通过相似度算法进行封站等问题。
