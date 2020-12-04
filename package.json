@@ -11,7 +11,7 @@
   },
   "bugs": "https://github.com/yanxlg/csdn.git",
   "dependencies": {
-    "highlight.js": "^10.0.3",
+    "highlight.js": "^10.4.1",
     "hexo-util": "git+https://github.com/yanxlg/hexo-util.git#a45ca576",
     "cheerio": "^1.0.0-rc.3",
     "hexo": "4.2.1",
