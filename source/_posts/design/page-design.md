@@ -5,7 +5,7 @@ date: 2020-12-02 19:09:14
 tags:
     - design
     - react
-password: mikemessi
+password: yanxianliang
 message: 本文暂不开放，需要密码才可阅读.
 wrong_pass_message: 密码错误，请输入正确的密码.
 ---
@@ -25,7 +25,7 @@ wrong_pass_message: 密码错误，请输入正确的密码.
 {% asset_img 1.png 架构图 %}
 + 全局配置管理：用于管理站点全局配置，页面共享配置，网站公共api，站点数据管理层。
 + Pages：页面层，Page组件，用于组装页面组件列表，调用组件api，获取初始数据，实现页面服务端渲染。
-+ 组件：组件库，用于互相组合形成页面。
++ 组件：`业务`组件库，用于互相组合形成页面。
 + 数据：每个组件拥有自己的api，进行异步调用，通过h2复用及reconnect解决创建链接问题，同时解决服务端同步取数据造成的性能问题。
 + 底层支撑：整个项目将使用到React、Preact、Nextjs、Nestjs、Jest、Typescript。PC端使用React，移动端使用Preact，通过plugin自动转换，实现开发过程无差别化，开发过程基于React开发，移动端使用Preact代替React能有效减少lib的体积；Nestjs 用于实现服务端渲染；Nestjs 作为Node环境框架，配合Nextjs实现服务端渲染系统，同时提供部分附加服务；Jest用于开发组件`UI Test` 及 `Unit Test`代码，组件及lib测试覆盖率必须达到`85%`以上；Typescript作为开发语言，严格限制代码规范，不符合规范的代码不允许提交。
 
@@ -63,11 +63,6 @@ wrong_pass_message: 密码错误，请输入正确的密码.
 {% asset_img 5.jpg 优化分析 %}
 性能问题及相关解决方案基本参照上述思维导图即可进行优化，在开发过程中需要严格按照相应要求进行开发。
 
-## 附加服务
-1. 性能分析服务：目前网站打点托管于vova打点系统，数据无法获取，不便与进行分析及调优，需要开发独立的性能分析服务，客户端上传相关性能指标，服务器端进行收集分析，后续可通过相关分析数据进行自动调优
-
-
-## 遗留问题
-1. 页面编辑器设计：参考另外专项设计文档
-2. `窗口数据、状态同步`：开发PC时根据需要待定
-3. `缓存方案`：参考另外设计文档（待定）
+## 附加工程化
+1. components-loader：webpack loader，项目中引入时自动引入所有组件，并以dynamic方式注册，结局schema解析时通过componentName和version追溯到组件实现的问题。
+2. editor-loader：webpack loader，编辑器项目中引入组件库时自动转换成Landing Page源码能识别的组件json格式。
